@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "hashed_password",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "username": "user1",
+    "password": "hashed_password",
+    "role": "user"
+  },
+  {
+    "id": 3,
+    "username": "chandru",
+    "password": "$2b$10$YjjeaQjcXU7w.UUigbe1O.CjEfXy4Vsiz2ImjCEPOpc3bjko/Z3Ra",
+    "role": "user"
+  },
+  {
+    "id": 4,
+    "username": "john",
+    "password": "$2b$10$AEmGeIHLQi01UWmjoKnnduM/tl.nJLN3kh8g/kBMSRpVMQ0b5WMDG",
+    "role": "admin"
+  }
+]

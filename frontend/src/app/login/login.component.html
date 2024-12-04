@@ -1,0 +1,66 @@
+<!-- <div class="login-container">
+  <h2>Login</h2>
+  <form (submit)="onSubmit()">
+    <label for="username">Username</label>
+    <input type="text" id="username" [(ngModel)]="username" name="username" required />
+    
+    <label for="password">Password</label>
+    <input type="password" id="password" [(ngModel)]="password" name="password" required />
+    
+    <button type="submit">Login</button>
+  </form>
+  <p>{{ message }}</p>
+</div> -->
+
+<div class="login-container">
+    <h2>Welcome</h2>
+    <div *ngIf="activeTab === 'login'">
+      <form (ngSubmit)="onLogin()">
+        <label for="username">Username:</label>
+        <input id="username" [(ngModel)]="loginData.username" name="username" required />
+  
+        <label for="password">Password:</label>
+        <input id="password" [(ngModel)]="loginData.password" name="password" type="password" required />
+  
+        <button type="submit">Login</button>
+      </form>
+    </div>
+    <div *ngIf="activeTab === 'register'">
+      <form (ngSubmit)="onRegister()">
+        <label for="username">Username:</label>
+        <input id="username" [(ngModel)]="registerData.username" name="username" required />
+  
+        <label for="password">Password:</label>
+        <input id="password" [(ngModel)]="registerData.password" name="password" type="password" required />
+  
+        <label for="role">Role:</label>
+        <select id="role" [(ngModel)]="registerData.role" name="role" required>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+  
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  
+  
+    <div *ngIf="activeTab === 'forgot'">
+      <form (ngSubmit)="onForgotPassword()">
+        <label for="username">Username:</label>
+        <input id="username" [(ngModel)]="forgotData.username" name="username" required />
+  
+        <label for="newPassword">New Password:</label>
+        <input id="newPassword" [(ngModel)]="forgotData.newPassword" name="newPassword" type="password" required />
+  
+        <button type="submit">Change Password</button>
+      </form>
+    </div>
+
+    <div class="tabs">
+      <button (click)="setActiveTab('login')">Login</button>
+      <button (click)="setActiveTab('register')">Register</button>
+      <button (click)="setActiveTab('forgot')">Forgot/Change Password</button>
+    </div>
+  </div>
+  
+

@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Smartphone",
+    "description": "Latest model with advanced features",
+    "price": 699.99,
+    "category": "electronics",
+    "imageUrl": "https://example.com/images/smartphone.jpg",
+    "createdAt": "2024-12-02T10:30:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Office Chair",
+    "description": "Ergonomic office chair with lumbar support",
+    "price": 199.99,
+    "category": "furniture",
+    "imageUrl": "https://example.com/images/office-chair.jpg",
+    "createdAt": "2024-12-01T14:15:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Running Shoes",
+    "description": "Lightweight and comfortable running shoes",
+    "price": 89.99,
+    "category": "clothing",
+    "imageUrl": "https://example.com/images/running-shoes.jpg",
+    "createdAt": "2024-11-30T08:20:00Z"
+  }
+]

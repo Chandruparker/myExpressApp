@@ -1,0 +1,8 @@
+
+<div>
+    <form (submit)="addItem()">
+        <input type="text" [(ngModel)]="itemName" name="name" placeholder="Name" required />
+        <input type="text" [(ngModel)]="itemDescription" name="description" placeholder="Description" required />
+        <button type="submit">Add</button>
+      </form>
+</div>
