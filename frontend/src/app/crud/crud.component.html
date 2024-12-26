@@ -18,21 +18,6 @@
       <button type="submit">{{ isEditing ? 'Update' : 'Add' }}</button>
     </form>
   </div> -->
-
-    <h2>Products</h2>
-    <div>
-      <label for="category">Filter by Category:</label>
-   <select (change)="onCategoryChange($event)">
-  <option *ngFor="let category of categories" [value]="category">
-    {{ category }}
-  </option>
-</select>
-<span><button *ngIf="userRole === 'admin'" (click)="addItem()">Add</button></span>
-    </div>
-
-
-      
-     
      
     <!-- </div>
     <table>
@@ -66,63 +51,76 @@
     </table>
   </div> -->
 
-  <div>
+<div class="grid-container">
+  <div class="grid-item">
+    <label for="category">Filter by Category:</label>
+    <select (change)="onCategoryChange($event)">
+   <option *ngFor="let category of categories" [value]="category">
+     {{ category }}
+   </option>
+ </select>
+ <span><button *ngIf="userRole === 'admin'" (click)="addItem()">Add</button></span>
+  </div>
+  <div class="grid-item">
     <mat-form-field appearance="outline" class="filter-input">
       <mat-label>Search</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Search products" />
     </mat-form-field>
   </div>
-  
-  <div class="mat-table-responsive">
-  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-    <ng-container matColumnDef="productId">
-      <mat-header-cell *matHeaderCellDef> Product Id </mat-header-cell>
-      <mat-cell *matCellDef="let product"> {{ product.productId }} </mat-cell>
-    </ng-container>
+  <div class="grid-item">
+    <div class="example-table-container">
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+        <ng-container matColumnDef="productId">
+          <mat-header-cell *matHeaderCellDef> Product Id </mat-header-cell>
+          <mat-cell *matCellDef="let product"> {{ product.productId }} </mat-cell>
+        </ng-container>
+       
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let product"> {{ product.name }} </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+          <mat-cell *matCellDef="let product"> {{ product.description }} </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+          <mat-cell *matCellDef="let product"> {{ product.price }} </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="category">
+          <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+          <mat-cell *matCellDef="let product"> {{ product.category }} </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef> CreatedOn </mat-header-cell>
+          <mat-cell *matCellDef="let product"> {{ product.createdAt }} </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-cell *matCellDef="let product" class="align">
+            <button mat-raised-button color="primary" (click)="viewItem(product.productId)">
+              View
+            </button>
+            <button mat-raised-button color="accent" *ngIf="userRole === 'admin'" (click)="editItem(product.productId)" >
+              Edit
+            </button>
+            <button mat-raised-button color="warn" *ngIf="userRole === 'admin'"(click)="deleteItem(product.productId)">
+              Delete
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      
+      </mat-table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div>  
    
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell *matCellDef="let product"> {{ product.name }} </mat-cell>
-    </ng-container>
-  
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-      <mat-cell *matCellDef="let product"> {{ product.description }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="price">
-      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
-      <mat-cell *matCellDef="let product"> {{ product.price }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="category">
-      <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
-      <mat-cell *matCellDef="let product"> {{ product.category }} </mat-cell>
-    </ng-container>
-  
-    <ng-container matColumnDef="createdAt">
-      <mat-header-cell *matHeaderCellDef> CreatedOn </mat-header-cell>
-      <mat-cell *matCellDef="let product"> {{ product.createdAt }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-      <mat-cell *matCellDef="let product" class="align">
-        <button mat-raised-button color="primary" (click)="viewItem(product.productId)">
-          View
-        </button>
-        <button mat-raised-button color="accent" *ngIf="userRole === 'admin'" (click)="editItem(product.productId)" >
-          Edit
-        </button>
-        <button mat-raised-button color="warn" *ngIf="userRole === 'admin'"(click)="deleteItem(product.productId)">
-          Delete
-        </button>
-      </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-  
-  </mat-table>
 </div>
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>

@@ -73,6 +73,8 @@
 const Item = require('../models/product');
 const getNextSequenceValue = require('../utils/getNextSequence');
 
+
+
 exports.getAllItems = async (req, res) => {
   try {
     const items = await Item.find();
@@ -82,29 +84,29 @@ exports.getAllItems = async (req, res) => {
   }
 };
 
-exports.addItem = async (req, res) => {
-    const { name, description, category, image } = req.body;
+// exports.addItem = async (req, res) => {
+//     const { name, description, image } = req.body;
 
-    if (!name || !description || !category) {
-      return res.status(400).json({ message: 'Name, description, and category are required.' });
-    }
+//     if (!name || !description || !category) {
+//       return res.status(400).json({ message: 'Name, description, and category are required.' });
+//     }
   
-    try {
-      const productId = await getNextSequenceValue('productId');
-      const newProduct = new Item({
-        productId,
-        name,
-        description,
-        category,
-        image,
-      });
+//     try {
+//       const productId = await getNextSequenceValue('productId');
+//       const newProduct = new Item({
+//         productId,
+//         name,
+//         description,
+//         category,
+//         image,
+//       });
   
-      await newProduct.save();
-      res.status(201).json({ message: 'Product added successfully.', newProduct });
-    } catch (error) {
-      res.status(500).json({ message: 'Server error.', error: error.message });
-    }
-  };
+//       await newProduct.save();
+//       res.status(201).json({ message: 'Product added successfully.', newProduct });
+//     } catch (error) {
+//       res.status(500).json({ message: 'Server error.', error: error.message });
+//     }
+//   };
 
 //   exports.updateItem = async (req, res) => {
 //     const { productId } = req.params;
@@ -126,6 +128,43 @@ exports.addItem = async (req, res) => {
 //       res.status(500).json({ message: 'Server error.', error: err.message });
 //     }
 //   };
+
+
+exports.addItem = async (req, res) => {
+  const { name, description, category, price } = req.body;
+  console.log('File received:', req.file); // Debugging
+  console.log('Request body:', req.body); // Debugging
+  // Validate fields
+  if (!name || !description || !category || !price) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  try {
+    const productId = await getNextSequenceValue('productId'); // Generate unique ID
+
+    // Handle image upload
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null; // Save relative path
+    console.log('Image URL:', imageUrl); // Debugging
+
+    // Create new item
+    const newItem = new Item({
+      productId,
+      name,
+      description,
+      category,
+      price,
+      image: imageUrl, // Save image path to MongoDB
+    });
+
+    // Save item to MongoDB
+    await newItem.save();
+
+    res.status(201).json({ message: 'Item added successfully.', newItem });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error.', error: error.message });
+  }
+};
+
 
 exports.updateItem = async (req, res) => {
     const { productId } = req.params;

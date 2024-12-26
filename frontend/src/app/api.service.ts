@@ -40,10 +40,12 @@ export class ApiService {
   }
   
 
-  addItem(item: { name: string; description: string }): Observable<any> {
+  // addItem(item: { name: string; description: string, image: any }): Observable<any> {
+  //   return this.http.post(`${this.baseUrl}/api/items`, item);
+  // }
+  addItem(item: FormData): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/items`, item);
   }
-
   updateItem(productId: number, item: { name: string; description: string }): Observable<any> {
     return this.http.put(`${this.baseUrl}/api/items/${productId}`, item);
   }

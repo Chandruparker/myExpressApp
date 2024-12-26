@@ -36,6 +36,7 @@ app.use(cors())
 app.use('/auth', authRoutes);
 app.use('/api', crudRoutes);
 app.use('/api/products', productRoutes);
+app.use('/uploads', express.static('controllers/uploads'));
 
 app.listen(3000, () => console.log('Server running on http://localhost:3000'));
 

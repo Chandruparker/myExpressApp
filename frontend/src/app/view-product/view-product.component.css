@@ -1,0 +1,16 @@
+.image-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+  .image-container img {
+    max-width: 100px; /* Adjust size as needed */
+    margin-right: 15px;
+  }
+  .image-container .url-text {
+    font-family: Arial, sans-serif;
+    color: #333;
+    word-wrap: break-word;
+    max-width: 400px; /* Prevent overflow */
+  }
+  
