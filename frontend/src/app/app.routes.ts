@@ -6,6 +6,9 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { ViewProductComponent } from './view-product/view-product.component';
 import { RoleGuard } from './role.guard';
 import { PermissionComponent } from './permission/permission.component';
+import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { BillingDetailsComponent } from './billing-details/billing-details.component';
 
 export const routes: Routes = [
 
@@ -17,6 +20,9 @@ export const routes: Routes = [
   { path: 'items/edit/:productId', component: EditProductComponent,canActivate: [RoleGuard],
     data: { role: 'admin' },  },
   { path: 'items/view/:productId', component: ViewProductComponent, },
-  { path: 'permission', component: PermissionComponent }
+  { path: 'permission', component: PermissionComponent },
+  { path: 'cart', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'billing', component: BillingDetailsComponent }
 
 ];

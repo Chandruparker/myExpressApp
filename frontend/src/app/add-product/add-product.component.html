@@ -71,22 +71,28 @@
     </button>
   </form>
 </mat-card> -->
+<div class="grid-container">
+  <div class="grid-item">
+    <form (ngSubmit)="addItem()">
+      <input type="text" [(ngModel)]="itemName" name="name" placeholder="Name" required />
+      <textarea [(ngModel)]="itemDescription" name="description" placeholder="Description" required></textarea>
+  <div> <select [(ngModel)]="itemCategory" name="category" required>
+    <option *ngFor="let category of categories" [value]="category">
+      {{ category }}
+    </option>
+  </select></div>
+     
+  
+      <input type="number" [(ngModel)]="itemPrice" name="price" placeholder="Price" required />
+  
+      <input type="file" (change)="onFileChange($event)" accept="image/*" />
+  
+     
+    </form>
+    </div>
+    
+    <div class="grid-item">
+      <button type="submit">Add</button>
+    </div>
+    </div>
 
-<div>
-  <form (ngSubmit)="addItem()">
-    <input type="text" [(ngModel)]="itemName" name="name" placeholder="Name" required />
-    <textarea [(ngModel)]="itemDescription" name="description" placeholder="Description" required></textarea>
-<div> <select [(ngModel)]="itemCategory" name="category" required>
-  <option *ngFor="let category of categories" [value]="category">
-    {{ category }}
-  </option>
-</select></div>
-   
-
-    <input type="number" [(ngModel)]="itemPrice" name="price" placeholder="Price" required />
-
-    <input type="file" (change)="onFileChange($event)" accept="image/*" />
-
-    <button type="submit">Add</button>
-  </form>
-</div>

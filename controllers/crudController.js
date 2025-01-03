@@ -71,6 +71,7 @@
 // module.exports = { getAllItems, addItem, updateItem, deleteItem, getItemById };
 
 const Item = require('../models/product');
+const Order = require('../models/orders');
 const getNextSequenceValue = require('../utils/getNextSequence');
 
 
@@ -236,4 +237,19 @@ exports.getItemById = async (req, res) => {
       res.status(500).json({ message: 'Server error.', error: err.message });
     }
   };
-    
+  
+  exports.orderedItem = async (req, res) => {
+    try {
+      const orderData = req.body;
+  
+     
+      const order = new Order(orderData);
+      await order.save();
+  
+      res.status(200).json({ message: 'Order submitted successfully!', order });
+    } catch (error) {
+      console.error('Error saving order:', error);
+      res.status(500).json({ message: 'Error submitting order', error });
+    }
+  };
+

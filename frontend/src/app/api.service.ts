@@ -53,6 +53,14 @@ export class ApiService {
   deleteItem(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/api/items/${id}`);
   }
+  generateOrderId(): string {
+    return 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+  }
+
+ 
+  submitBillingDetails(billingData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/submitOrder`, billingData);
+  }
 
 
 }

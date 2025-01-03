@@ -34,7 +34,15 @@ onLogin() {
       console.log('resval',response.user.role)
       if (response && response.user.role) {
         localStorage.setItem('userRole', response.user.role); // Store the role
-        localStorage.setItem('token', response.token); // Store the token
+        localStorage.setItem('token', response.user.token); // Store the token
+        localStorage.setItem('userName', response.user.username);
+        sessionStorage.setItem(
+          'orderDetails',
+          JSON.stringify([
+            { name: 'Product 1', quantity: 2, price: 200 },
+            { name: 'Product 2', quantity: 1, price: 150 }
+          ])
+        );
       } else {
         console.error('Login response does not contain role');
       }

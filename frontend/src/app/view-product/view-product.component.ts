@@ -1,23 +1,44 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../api.service';
 import { ActivatedRoute,Router } from '@angular/router';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CartService } from '../cart.service';
 
 
 @Component({
   selector: 'app-view-product',
-  imports: [],
+  imports: [FormsModule, NgIf],
   templateUrl: './view-product.component.html',
   styleUrl: './view-product.component.css'
 })
 export class ViewProductComponent {
-  item: any = {};
-
+  item: any = {image: []};
+  quantity: number = 1; // Default quantity
+  cart: any[] = []; // Cart array
+  totalValue: number = 0; // Total value of cart
+  cartItem: any[] = [];
+  cartItemCount: number = 0;
+  
+  productDetails = {
+    name: 'Faded SkyBlu Denim Jeans',
+    price: 149.99,
+    category: 'Household',
+    availability: 'In Stock',
+    description:
+      'Mill Oil is an innovative oil-filled radiator with the most modern technology.',
+  };
+  productImages: string[] = []; // Array to store the image URLs
+  currentImageIndex = 0; 
+  selectedImage: string = '';
+  specification: boolean=false
+  selectedTab: string = 'specification';
   
   constructor(
     private api: ApiService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
 
   // ngOnInit() {
@@ -34,17 +55,39 @@ export class ViewProductComponent {
   //     this.router.navigate(['/items']); 
   //   }
   // }
+  // ngOnInit() {
+  //   const productId = Number(this.route.snapshot.paramMap.get('productId'));
+
+  //   if (!isNaN(productId)) {
+  //     this.api.getItemById(productId).subscribe((data) => {
+  //       if (data.image) {
+  //         data.image = `http://localhost:3000${data.image}`;
+  //       }
+  //       this.item = data;
+  //       console.log('Fetched product:', this.item);
+  //     });
+  //   } else {
+  //     console.error('Invalid ID');
+  //     this.router.navigate(['/items']);
+  //   }
+  // }
+
   ngOnInit() {
     const productId = Number(this.route.snapshot.paramMap.get('productId'));
   
     if (!isNaN(productId)) {
       this.api.getItemById(productId).subscribe((data) => {
-        // Ensure the image URL is complete
-        if (data.image) {
-          data.image = `http://localhost:3000${data.image}`;
+        if (data.image && Array.isArray(data.image)) {
+          // Prepend the base URL to each image path
+          this.item = {
+            ...data,
+            image: data.image.map((imgPath: string) => `http://localhost:3000${imgPath}`)
+          };
+        } else {
+          this.item = data;
+          console.warn('No images found for this product.');
         }
   
-        this.item = data;
         console.log('Fetched product:', this.item);
       });
     } else {
@@ -55,5 +98,38 @@ export class ViewProductComponent {
   
   goBack() {
     this.router.navigate(['/product']);
+  }
+
+  addToCart() {
+    const cartItem = {
+      ...this.item,
+      quantity: this.quantity,
+      totalPrice: this.item.price * this.quantity,
+    };
+
+    // Add to cart array
+    this.cartService.addToCart(cartItem);
+    
+
+    console.log('Cart:', cartItem);
+  }
+
+  navigateToCart() {
+    // Navigate to the cart page and pass the cart data
+    this.router.navigate(['/cart'], { state: { cart: this.cart } });
+  }
+  prevImage() {
+    if (this.currentImageIndex > 0) {
+      this.currentImageIndex--;
+    }
+  }
+
+  nextImage() {
+    if (this.currentImageIndex < this.item.image.length - 1) {
+      this.currentImageIndex++;
+    }
+  }
+  setSelected(tab: string) {
+    this.selectedTab = tab;
   }
 }

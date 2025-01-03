@@ -1,0 +1,78 @@
+<div class="grid-container">
+    <div class="grid-item">
+        <div class="billing-container">
+            <h1>Billing Details</h1>
+            <form (ngSubmit)="submitBillingDetails()" #billingForm="ngForm">
+              <!-- User Name -->
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  [(ngModel)]="billingData.name"
+                  class="form-control"
+                  [readonly]="true"
+                />
+              </div>
+          
+              <!-- Address -->
+              <div class="form-group">
+                <label for="address">Address</label>
+                <textarea
+                  id="address"
+                  name="address"
+                  [(ngModel)]="billingData.address"
+                  class="form-control"
+                  required
+                ></textarea>
+              </div>
+          
+              <!-- City -->
+              <div class="form-group">
+                <label for="city">City</label>
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  [(ngModel)]="billingData.city"
+                  class="form-control"
+                  required
+                />
+              </div>
+          
+              <!-- Postal Code -->
+              <div class="form-group">
+                <label for="postalCode">Postal Code</label>
+                <input
+                  type="text"
+                  id="postalCode"
+                  name="postalCode"
+                  [(ngModel)]="billingData.postalCode"
+                  class="form-control"
+                  required
+                />
+              </div>
+          
+              <!-- Contact Number -->
+              <div class="form-group">
+                <label for="contact">Contact Number</label>
+                <input
+                  type="text"
+                  id="contact"
+                  name="contact"
+                  [(ngModel)]="billingData.contact"
+                  class="form-control"
+                  required
+                />
+              </div>
+          
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary" [disabled]="!billingForm.form.valid">
+                Submit
+              </button>
+            </form>
+          </div>
+          
+</div>
+</div>
