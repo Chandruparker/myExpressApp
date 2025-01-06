@@ -28,11 +28,18 @@ export class AddProductComponent {
   categories = ['Electronics', 'Clothing', 'Books', 'Furniture'];
   isEditing = false;
   editingItemId: number | null = null;
+  imageUploadForm: FormGroup;
+  selectedFiles: File[] = [];
+  selectedImages: File[] = [];
+  imagePreviews: string[] = [];
   
   constructor(private api: ApiService,private route: ActivatedRoute,private router: Router, private fb: FormBuilder) {
     this.itemForm = this.fb.group({
       description: ['', [Validators.required, Validators.maxLength(500)]],
       image: [null, Validators.required]
+    });
+    this.imageUploadForm = this.fb.group({
+      images: [null],
     });
   }
 
@@ -73,40 +80,109 @@ export class AddProductComponent {
   //   }
   // }
 
+  // addItem(): void {
+  //   const formData = new FormData();
+  //   formData.append('name', this.itemName);
+  //   formData.append('description', this.itemDescription);
+  //   formData.append('category', this.itemCategory);
+  //   formData.append('price', this.itemPrice?.toString() || '');
+  //    if (!this.itemName || !this.itemDescription || !this.itemCategory || !this.itemPrice || !this.selectedImage) {
+  //     alert('All fields are required.');
+  //     return;
+  //   }
+  //   console.log('FormData contents:'); 
+  //   formData.forEach((value, key) => console.log(key, value));
+    
+  //   if (this.selectedImage) {
+  //     formData.append('image', this.selectedImage);
+  //   }
+
+  //   this.api.addItem(formData).subscribe((res) => {
+  //     this.router.navigate(['/product']);
+  //     console.log('formval',res)
+  //   });
+  // }
+
+  // onFileChange(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files.length > 0) {
+  //     this.selectedImage = input.files[0];
+  //     console.log('Selected File:', this.selectedImage); 
+  //   }
+  // }
+
+  // onSubmit(): void {
+  //   if (this.itemForm.valid) {
+  //     console.log('Form Data:', this.itemForm.value);
+  //   }
+  // }
   addItem(): void {
     const formData = new FormData();
+  
+    // Append form fields
     formData.append('name', this.itemName);
     formData.append('description', this.itemDescription);
     formData.append('category', this.itemCategory);
     formData.append('price', this.itemPrice?.toString() || '');
-     if (!this.itemName || !this.itemDescription || !this.itemCategory || !this.itemPrice || !this.selectedImage) {
-      alert('All fields are required.');
+  
+    if (!this.itemName || !this.itemDescription || !this.itemCategory || !this.itemPrice || this.selectedImages.length === 0) {
+      alert('All fields and at least one image are required.');
       return;
     }
-    console.log('FormData contents:'); // Debugging
-    formData.forEach((value, key) => console.log(key, value));
-    
-    if (this.selectedImage) {
-      formData.append('image', this.selectedImage);
-    }
-
-    this.api.addItem(formData).subscribe((res) => {
-      this.router.navigate(['/product']);
-      console.log('formval',res)
+  
+    // Append all selected images to FormData
+    this.selectedImages.forEach((file) => {
+      formData.append('images', file); // Use 'images' as the key for multiple images
     });
+  
+    console.log('FormData contents:');
+    formData.forEach((value, key) => console.log(key, value));
+  
+    // Call the service
+    this.api.addItem(formData).subscribe(
+      (res) => {
+        this.router.navigate(['/product']);
+        console.log('Response:', res);
+      },
+      (err) => {
+        console.error('Error:', err);
+      }
+    );
   }
+  
 
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
+  
     if (input.files && input.files.length > 0) {
-      this.selectedImage = input.files[0];
-      console.log('Selected File:', this.selectedImage); 
+      this.selectedImages = Array.from(input.files); // Convert FileList to File[]
+      this.imagePreviews = []; // Clear previous previews
+  
+      this.selectedImages.forEach((file) => {
+        const reader = new FileReader();
+  
+        reader.onload = (e: any) => {
+          this.imagePreviews.push(e.target.result); // Add image preview URL
+        };
+  
+        reader.readAsDataURL(file); // Read file as data URL
+      });
+  
+      console.log('Selected Files:', this.selectedImages);
+      console.log('Image Previews:', this.imagePreviews);
     }
   }
+  
 
-  onSubmit(): void {
-    if (this.itemForm.valid) {
-      console.log('Form Data:', this.itemForm.value);
-    }
+
+onSubmit(): void {
+  if (this.itemForm.valid) {
+    console.log('Form Data:', this.itemForm.value);
   }
+}
+
+// Define selectedImages to hold multiple files
+// selectedImages: File[] = [];
+
+  
 }

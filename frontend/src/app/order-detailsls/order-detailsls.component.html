@@ -1,0 +1,57 @@
+<div class="order-details-container">
+    <h2>Fetch Order Details</h2>
+    
+    <!-- Input Field to Pass Order ID -->
+    <div class="form-group">
+      <label for="orderIdInput">Order ID:</label>
+      <input type="text" id="orderIdInput" [(ngModel)]="orderId" placeholder="Enter Order ID" />
+      <button (click)="fetchOrderDetails()">Fetch Order</button>
+    </div>
+  
+    <!-- Display Order Details in a Table -->
+    <table *ngIf="orderDetails" class="order-details-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of orderDetails.orderDetails.cartItems">
+          <td>{{ product.name }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>{{ product.price  }}</td>
+          <td>{{ product.quantity * product.price }}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><strong>Total Value:</strong></td>
+          <td>{{ orderDetails.orderDetails.totalValue }}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><strong>Discount:</strong></td>
+          <td>{{ orderDetails.orderDetails.discount }}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><strong>Delivery Charge:</strong></td>
+          <td>{{ orderDetails.orderDetails.deliveryCharge  }}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><strong>Tax:</strong></td>
+          <td>{{ orderDetails.orderDetails.tax  }}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><strong>GST:</strong></td>
+          <td>{{ orderDetails.orderDetails.gst  }}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><strong>Final Amount:</strong></td>
+          <td>{{ orderDetails.orderDetails.totalValue + orderDetails.orderDetails.gst + orderDetails.orderDetails.tax}}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <p *ngIf="!orderDetails && hasSearched">No order found with the given Order ID.</p>
+  </div>
+  

@@ -32,6 +32,14 @@ export class ApiService {
     return this.http.get<any[]>(`${this.baseUrl}/api/items`);
   }
 
+  getOrders(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/orders`);
+  }
+
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/api/users`);
+  }
+
   // getItemById(productId: number): Observable<any> {
   //   return this.http.get<any>(`${this.baseUrl}/api/items/${productId}`);
   // }
@@ -62,5 +70,7 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/api/submitOrder`, billingData);
   }
 
-
+  getItemByOrderId(orderId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/api/orders/${orderId}`);
+  }
 }

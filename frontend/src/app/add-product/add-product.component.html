@@ -71,7 +71,7 @@
     </button>
   </form>
 </mat-card> -->
-<div class="grid-container">
+<!-- <div class="grid-container">
   <div class="grid-item">
     <form (ngSubmit)="addItem()">
       <input type="text" [(ngModel)]="itemName" name="name" placeholder="Name" required />
@@ -96,3 +96,59 @@
     </div>
     </div>
 
+<div>
+  <form [formGroup]="imageUploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <label for="images">Upload Multiple Images:</label>
+    <input
+      type="file"
+      id="images"
+      formControlName="images"
+      multiple
+      (change)="onFileChange($event)"
+      accept="image/*"
+    />
+    <div *ngIf="selectedImages.length > 0">
+      <h3>Selected Images Preview:</h3>
+      <div *ngFor="let img of selectedImages">
+        <img [src]="img" alt="Preview" width="100" height="100" style="margin: 5px;" />
+      </div>
+    </div>
+    <button type="submit">Upload</button>
+  </form>
+  
+</div> -->
+
+<div class="grid-container">
+  <div class="grid-item">
+    <form (ngSubmit)="addItem()" enctype="multipart/form-data">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" [(ngModel)]="itemName" name="name" required />
+      </div>
+      <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" [(ngModel)]="itemDescription" name="description" required />
+      </div>
+      <div>
+        <label for="category">Category:</label>
+        <input type="text" id="category" [(ngModel)]="itemCategory" name="category" required />
+      </div>
+      <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" [(ngModel)]="itemPrice" name="price" required />
+      </div>
+      <div class="image-preview-container">
+        <h4>Image Previews:</h4>
+        <div *ngFor="let preview of imagePreviews" class="image-preview">
+          <img [src]="preview" alt="Selected Image" class="preview-image" />
+        </div>
+      </div>
+      
+      <!-- File Input -->
+      <input type="file" (change)="onFileChange($event)" multiple />
+      
+      <button type="submit">Submit</button>
+    </form>
+    
+    </div>
+    </div>

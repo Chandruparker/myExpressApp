@@ -72,6 +72,7 @@
 
 const Item = require('../models/product');
 const Order = require('../models/orders');
+const User = require('../models/users')
 const getNextSequenceValue = require('../utils/getNextSequence');
 
 
@@ -85,6 +86,23 @@ exports.getAllItems = async (req, res) => {
   }
 };
 
+exports.getAllOrders = async (req, res) => {
+  try {
+    const items = await Order.find();
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error.', error: err.message });
+  }
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const items = await User.find();
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error.', error: err.message });
+  }
+};
 // exports.addItem = async (req, res) => {
 //     const { name, description, image } = req.body;
 
@@ -131,10 +149,47 @@ exports.getAllItems = async (req, res) => {
 //   };
 
 
+// exports.addItem = async (req, res) => {
+//   const { name, description, category, price } = req.body;
+//   console.log('File received:', req.file); 
+//   console.log('Request body:', req.body); 
+ 
+//   if (!name || !description || !category || !price) {
+//     return res.status(400).json({ message: 'All fields are required.' });
+//   }
+
+//   try {
+//     const productId = await getNextSequenceValue('productId');
+
+
+//     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null; 
+//     console.log('Image URL:', imageUrl); 
+
+    
+//     const newItem = new Item({
+//       productId,
+//       name,
+//       description,
+//       category,
+//       price,
+//       image: imageUrl, // Save image path to MongoDB
+//     });
+
+   
+//     await newItem.save();
+
+//     res.status(201).json({ message: 'Item added successfully.', newItem });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Server error.', error: error.message });
+//   }
+// };
+
 exports.addItem = async (req, res) => {
   const { name, description, category, price } = req.body;
-  console.log('File received:', req.file); // Debugging
+
+  console.log('Files received:', req.files); // Debugging for multiple files
   console.log('Request body:', req.body); // Debugging
+
   // Validate fields
   if (!name || !description || !category || !price) {
     return res.status(400).json({ message: 'All fields are required.' });
@@ -143,9 +198,9 @@ exports.addItem = async (req, res) => {
   try {
     const productId = await getNextSequenceValue('productId'); // Generate unique ID
 
-    // Handle image upload
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null; // Save relative path
-    console.log('Image URL:', imageUrl); // Debugging
+    // Handle multiple image uploads
+    const imageUrls = req.files ? req.files.map((file) => `/uploads/${file.filename}`) : [];
+    console.log('Image URLs:', imageUrls); // Debugging
 
     // Create new item
     const newItem = new Item({
@@ -154,7 +209,7 @@ exports.addItem = async (req, res) => {
       description,
       category,
       price,
-      image: imageUrl, // Save image path to MongoDB
+      image: imageUrls, // Save array of image paths to MongoDB
     });
 
     // Save item to MongoDB
@@ -253,3 +308,20 @@ exports.getItemById = async (req, res) => {
     }
   };
 
+  exports.getItemByOrderId = async (req, res) => {
+    const { orderId } = req.params;
+  
+    try {
+      // Use orderId as a string to query the database
+      const item = await Order.findOne({ orderId: orderId });
+  
+      if (!item) {
+        return res.status(404).json({ message: 'Order not found.' });
+      }
+  
+      res.json(item);
+    } catch (err) {
+      res.status(500).json({ message: 'Server error.', error: err.message });
+    }
+  };
+  

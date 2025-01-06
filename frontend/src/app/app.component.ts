@@ -51,5 +51,7 @@ export class AppComponent {
   navigateToLogin(){
     this.router.navigate(['/login']);
   }
- 
+  navigateToOrder(){
+    this.router.navigate(['/order']);
+  }
 }
