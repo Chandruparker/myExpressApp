@@ -36,13 +36,6 @@ onLogin() {
         localStorage.setItem('userRole', response.user.role); // Store the role
         localStorage.setItem('token', response.user.token); // Store the token
         localStorage.setItem('userName', response.user.username);
-        sessionStorage.setItem(
-          'orderDetails',
-          JSON.stringify([
-            { name: 'Product 1', quantity: 2, price: 200 },
-            { name: 'Product 2', quantity: 1, price: 150 }
-          ])
-        );
       } else {
         console.error('Login response does not contain role');
       }
@@ -51,6 +44,19 @@ onLogin() {
     },
     (error) => {
       this.message = 'Invalid credentials.';
+    }
+  );
+}
+onLogin2(): void {
+  this.api.login(this.loginData.username, this.loginData.password).subscribe(
+    (response) => {
+      console.log('Login successful:', response);
+      this.message = 'Login successful!';
+      this.router.navigate(['/product']); // Navigate to the desired route
+    },
+    (error) => {
+      console.error('Login failed:', error);
+      this.message = 'Invalid credentials. Please try again.';
     }
   );
 }

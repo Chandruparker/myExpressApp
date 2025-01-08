@@ -11,7 +11,7 @@
   <a *ngIf="isAdmin()" routerLink="/add">Add Product</a>
 </nav> -->
 
-  <div class="toolbar" style="background-color: #00bcd4;">
+  <!-- <div class="toolbar" style="background-color: #00bcd4;">
     <div class="toolbar-left">
     
       <h1>E-Commerce</h1>
@@ -26,7 +26,7 @@
   </div>
   
 
-<router-outlet></router-outlet>
+<router-outlet></router-outlet> -->
 
 <!-- <footer class="footer-area section_gap">
   <div class="container">
@@ -99,6 +99,7 @@
   </div>
 </footer> -->
 
+<!-- 
 <footer class="footer">
   <div style=" display: flex;">
   <div class="footer-section footer-about">
@@ -146,4 +147,71 @@
     <p>&copy; 2024 YourCompany. All Rights Reserved.</p>
   </div>
 
-</footer>
+</footer> -->
+
+
+<div *ngIf="isLoggedIn; else loginPage">
+  <!-- Main Layout (Top Bar, Sidebar, and Content) -->
+  <div class="main-container">
+    <!-- Top Bar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <h1>E-Commerce</h1>
+      </div>
+      <div class="toolbar-right">
+        <button (click)="logout()">Logout</button>
+        <button (click)="navigateToHome()">Home</button>
+        <button (click)="navigateToOrder()">Your Order</button>
+        <button (click)="navigateToCart()">🛒 Cart ({{ cartItemCount }})</button>
+      </div>
+    </div>
+
+    <!-- Sidebar and Content -->
+    <div class="content-container">
+      <!-- Sidebar -->
+      <div class="sidebar" [class.closed]="isSidebarClosed">
+        <button class="toggle-btn" (click)="toggleSidebar()">
+          {{ isSidebarClosed ? 'Open' : 'Close' }}
+        </button>
+        <ul class="menu">
+          <li *ngFor="let menu of filteredMenuItems">
+            <div class="menu-item" (click)="toggleSubmenu(menu)">
+              <span *ngIf="!isSidebarClosed; else iconOnly">
+                {{ menu.label }}
+              </span>
+              <ng-template #iconOnly>
+                <i class="menu-icon">🔹</i> <!-- Replace with actual icons -->
+              </ng-template>
+              <span *ngIf="menu.submenus">
+                {{ menu.isExpanded ? '▼' : '▶' }}
+              </span>
+            </div>
+            <ul *ngIf="menu.isExpanded && menu.submenus" class="submenu">
+              <li *ngFor="let submenu of menu.submenus" (click)="navigateTo(submenu.route)">
+                {{ submenu.label }}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Login Page -->
+<ng-template #loginPage>
+  <div class="login-container">
+    <h2>Welcome! Please Log In</h2>
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>
+
+
+
+
+

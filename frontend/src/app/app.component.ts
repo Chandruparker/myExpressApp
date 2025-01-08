@@ -1,10 +1,25 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LoginComponent } from "./login/login.component";
 import { CrudComponent } from "./crud/crud.component";
 import { CommonModule, NgIf } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CartService } from './cart.service';
+import { ApiService } from './api.service';
+
+interface Submenu {
+  label: string;
+  route: string;
+  roles?: string[];
+}
+
+interface MenuItem {
+  label: string;
+  route?: string;
+  isExpanded?: boolean;
+  roles?: string[];
+  submenus?: Submenu[];
+}
 
 @Component({
   selector: 'app-root',
@@ -14,44 +29,138 @@ import { CartService } from './cart.service';
 })
 
 
-export class AppComponent {
- constructor(
-  
-    private route: ActivatedRoute,
-    private router: Router,
-    private cartService: CartService
-   
-  ) {}
-  ngOnInit() {
-    // Subscribe to the cart count
+export class AppComponent implements OnInit {
+  menuItems: MenuItem[] = [
+    {
+      label: 'Dashboard',
+      route: '/dashboard',
+      isExpanded: false,
+      roles: ['admin'],
+    },
+    {
+      label: 'Orders',
+      isExpanded: false,
+      roles: ['admin', 'user'],
+      submenus: [
+        { label: 'View Orders', route: '/order-details', roles: ['admin'] },
+        
+      ],
+    },
+    {
+      label: 'Users',
+      route: '/users',
+      isExpanded: false,
+      roles: ['admin'],
+    },
+    {
+      label: 'Products',
+      isExpanded: false,
+      roles: ['admin'],
+      submenus: [
+        { label: 'All Product', route: '/product', roles: ['admin'] },
+        { label: 'Add Product', route: '/add', roles: ['admin'] }
+     
+      ],
+    },
+  ];
+
+  filteredMenuItems: MenuItem[] = [];
+  isLoggedIn: boolean = false;
+  cartItemCount: number = 0;
+  isSidebarClosed = false;
+
+  constructor(private cdr: ChangeDetectorRef,private router: Router, private cartService: CartService,private api:ApiService) {}
+
+  ngOnInit(): void {
+    this.cdr.detectChanges();
+    // Check login status initially
+    this.checkLoginStatus();
+
+    // Subscribe to cart updates
     this.cartService.cartCount$.subscribe((count) => {
       this.cartItemCount = count;
-      console.log('count',count)
+    });
+
+    // Filter menu based on user role
+    const userRole = localStorage.getItem('userRole') || 'user';
+    this.filterMenuByRole(userRole);
+    console.log('menuRole',this.filterMenuByRole)
+
+    // Detect route changes to update login status
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.checkLoginStatus();
+      }
+    });
+
+    this.api.initializeRole(); // Initialize role from localStorage if available
+    this.subscribeToRoleChanges();
+    
+  }
+
+  checkLoginStatus(): void {
+    this.isLoggedIn = !!localStorage.getItem('userRole');
+  }
+
+  subscribeToRoleChanges(): void {
+    this.api.getUserRole().subscribe((role) => {
+      if (role) {
+        this.isLoggedIn = true;
+        this.filterMenuByRole(role);
+      } else {
+        this.isLoggedIn = false;
+        this.filteredMenuItems = [];
+      }
+      this.cdr.detectChanges(); // Ensure view updates dynamically
     });
   }
 
-  title = 'frontend';
-  cart: any[] = [];
-  cartItemCount: number = 0;
+  filterMenuByRole(role: string): void {
+    this.filteredMenuItems = this.menuItems
+      .filter((menu) => menu.roles?.includes(role))
+      .map((menu) => {
+        if (menu.submenus) {
+          const filteredSubmenus = menu.submenus.filter((submenu) =>
+            submenu.roles?.includes(role)
+          );
+          return { ...menu, submenus: filteredSubmenus };
+        }
+        return menu;
+      });
+    console.log('Filtered Menu Items:', this.filteredMenuItems); // Debugging
+  }
 
-  isAdmin(): boolean {
-    return localStorage.getItem('userRole') === 'admin';
+
+  toggleSidebar(): void {
+    this.isSidebarClosed = !this.isSidebarClosed;
   }
-  
-  isUser(): boolean {
-    return localStorage.getItem('userRole') === 'user';
+
+  toggleSubmenu(menu: MenuItem): void {
+    if (menu.submenus) {
+      menu.isExpanded = !menu.isExpanded;
+    } else if (menu.route) {
+      this.navigateTo(menu.route);
+    }
   }
-  navigateToCart() {
-    // Navigate to the cart page and pass the cart data
-    this.router.navigate(['/cart'], { state: { cart: this.cart } });
+
+  navigateTo(route: string): void {
+    this.router.navigate([route]);
   }
-  navigateToHome(){
-    this.router.navigate(['/product']);
-  }
-  navigateToLogin(){
+
+  logout(): void {
+    this.api.logout();
     this.router.navigate(['/login']);
   }
-  navigateToOrder(){
+
+  navigateToCart(): void {
+    this.router.navigate(['/cart'], { state: { cart: [] } });
+  }
+
+  navigateToHome(): void {
+    this.router.navigate(['/product']);
+  }
+
+  navigateToOrder(): void {
     this.router.navigate(['/order']);
   }
 }

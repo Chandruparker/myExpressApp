@@ -1,1 +1,242 @@
+<div class="grid-container">
+    <div class="grid-item">
+  <div class="row">
+    <div class="button-container">
+    <div class="grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              
+              <div class="toolbar-left">
+             
+                <span><h3 class="mb-0 text-value" >$12.34</h3></span>
+               
+              <span> <p class="text-success font-weight-medium value">+3.5%</p></span> 
+              </div>
+              
+            </div>
+            <div class="col-3">
+              <div class="icon icon-box-success ">
+                <span class="mdi mdi-arrow-top-right icon-item"></span>
+              </div>
+            </div>
+          </div>
+          <p class="text-muted font-weight-normal">Potential growth</p>
+        </div>
+      </div>
+    </div>
+    <div class=" grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+                <div class="toolbar-left">
+                    <span><h3 class="mb-0 text-value" >$12.34</h3></span>
+                   
+                  <span> <p class="text-success font-weight-medium value">+3.5%</p></span> 
+                  </div>
+            </div>
+            <div class="col-3">
+              <div class="icon icon-box-success">
+                <span class="mdi mdi-arrow-top-right icon-item"></span>
+              </div>
+            </div>
+          </div>
+          <p class="text-muted font-weight-normal">Revenue Current</p>
+        </div>
+      </div>
+    </div>
+    <div class=" grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+                <div class="toolbar-left">
+                    <span><h3 class="mb-0 text-value" >$12.34</h3></span>
+                   
+                  <span> <p class="text-success font-weight-medium value">+3.5%</p></span> 
+                  </div>
+            </div>
+            <div class="col-3">
+              <div class="icon icon-box-danger">
+                <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+              </div>
+            </div>
+          </div>
+          <p class="text-muted font-weight-normal">Daily Income</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+                <div class="toolbar-left">
+                    <span><h3 class="mb-0 text-value" >$12.34</h3></span>
+                   
+                  <span> <p class="text-success font-weight-medium value">+3.5%</p></span> 
+                  </div>
+            </div>
+            <div class="col-3">
+              <div class="icon icon-box-success ">
+                <span class="mdi mdi-arrow-top-right icon-item"></span>
+              </div>
+            </div>
+          </div>
+          <p class="text-muted font-weight-normal">Expense Current</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+  </div>
+<div class="grid-container">
+    <div class="grid-item dashboard-container">
 
+<div class="chart-card">
+    <h3>Total Users: {{ totalUsers }}</h3>
+    <div >
+      <ngx-charts-pie-chart
+        [view]="userRoleView"
+       
+        [results]="userRoleData"
+        [gradient]="userRoleGradient"
+        [doughnut]="true"
+        [labels]="true">
+      </ngx-charts-pie-chart>
+    </div>
+  </div>
+  
+  <div class="chart-card">
+    <h3>Order Value Over Time</h3>
+    <div >
+      <ngx-charts-bar-vertical
+        [view]="orderView"
+       
+        [results]="orderData"
+        [gradient]="orderGradient"
+        [xAxis]="orderShowXAxis"
+        [yAxis]="orderShowYAxis"
+        [legend]="orderShowLegend"
+        [showXAxisLabel]="orderShowXAxisLabel"
+        [showYAxisLabel]="orderShowYAxisLabel"
+        [xAxisLabel]="orderXAxisLabel"
+        [yAxisLabel]="orderYAxisLabel">
+      </ngx-charts-bar-vertical>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  
+<div class="grid-container">
+    <div class="grid-item">
+  <div class="row">
+  
+    <div class="button-container">
+    <div class="grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+                <p class=" font-weight-normal">Revenue</p>
+              <div class="toolbar-left">
+                <span><h3 class="mb-0 text-value" >$12.34</h3></span>
+               
+              <span> <p class="text-success font-weight-medium value">+3.5%</p></span> 
+              </div>
+              
+            </div>
+            <div class="col-3">
+              <div class="icon icon-box-success ">
+                <span class="mdi mdi-arrow-top-right icon-item"></span>
+              </div>
+            </div>
+          </div>
+          <p class="text-muted font-weight-normal">Potential growth</p>
+        </div>
+      </div>
+    </div>
+    <div class=" grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+                <p class=" font-weight-normal">Sales</p>
+                <div class="toolbar-left">
+                    <span><h3 class="mb-0 text-value" >$12.34</h3></span>
+                   
+                  <span> <p class="text-success font-weight-medium value">+3.5%</p></span> 
+                  </div>
+            </div>
+            <div class="col-3">
+              <div class="icon icon-box-success">
+                <span class="mdi mdi-arrow-top-right icon-item"></span>
+              </div>
+            </div>
+          </div>
+          <p class="text-muted font-weight-normal">Potential growth</p>
+        </div>
+      </div>
+    </div>
+    <div class=" grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row" >
+            <div class="col-9">
+                <p class=" font-weight-normal">Purchase</p>
+                <div class="toolbar-left">
+                    <span><h3 class="mb-0 text-value" >$12.34</h3></span>
+                   
+                  <span> <p class="text-success font-weight-medium value">+3.5%</p></span> 
+                  </div>
+            </div>
+            <div class="col-3">
+              <div class="icon icon-box-danger">
+                <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+              </div>
+            </div>
+          </div>
+          <p class="text-muted font-weight-normal">Potential growth</p>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</div>
+  </div>
+  </div>
+
+  <div class="grid-container">
+    <div class="grid-item">
+        <div>
+            <h4> Order Status</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Order Id</th>
+                  <th>Product Cost</th>
+                  <th>Payment Method</th>
+                  <th>Payment Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of orders">
+                    <td>{{ order.userName }}</td>
+                  <td>{{ order.orderId }}</td>
+                 
+                  <td>{{ order.orderDetails.totalValue  }}</td>
+                  <td><p>Online Payment</p> </td>
+                  <td><p>Pending</p></td>
+                 
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+    </div>
+    </div>

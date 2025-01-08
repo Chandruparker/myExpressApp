@@ -104,9 +104,9 @@
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
           <mat-cell *matCellDef="let product" class="align">
-            <button mat-raised-button color="primary" (click)="viewItem(product.productId)">
+            <!-- <button mat-raised-button color="primary" (click)="viewItem(product.productId)">
               View
-            </button>
+            </button> -->
             <button mat-raised-button color="accent" *ngIf="userRole === 'admin'" (click)="editItem(product.productId)" >
               Edit
             </button>

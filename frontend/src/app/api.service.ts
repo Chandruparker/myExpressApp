@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   private baseUrl = 'http://localhost:3000';
+  private userRoleSubject = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -14,14 +15,42 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/auth/register`, { username, password, role });
   }
 
+  getUserRole(): Observable<string | null> {
+    return this.userRoleSubject.asObservable();
+  }
+
   login(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth/login`, { username, password }).pipe(
+    const payload = { username, password };
+    return this.http.post(`${this.baseUrl}/auth/login`, payload).pipe(
       tap((response: any) => {
-        localStorage.setItem('userRole', response.role);
-        localStorage.setItem('token', response.token);
+        if (response?.user?.role) {
+          // Store role and token in local storage
+          localStorage.setItem('userRole', response.user.role);
+          localStorage.setItem('token', response.user.token || '');
+          localStorage.setItem('userName', response.user.username);
+          // Emit role via BehaviorSubject
+          this.userRoleSubject.next(response.user.role);
+        } else {
+          console.error('Invalid login response format:', response);
+        }
       })
     );
   }
+  
+  initializeRole(): void {
+    const storedRole = localStorage.getItem('userRole');
+    if (storedRole) {
+      this.userRoleSubject.next(storedRole); // Initialize the role if stored in localStorage
+    }
+  }
+
+  logout(): void {
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('token');
+    this.userRoleSubject.next(null); // Emit null on logout
+  }
+  
+  
 
   forgotPassword(username: string, newPassword: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/forgot-password`, { username, newPassword });
