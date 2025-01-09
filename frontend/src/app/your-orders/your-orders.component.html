@@ -1,0 +1,32 @@
+<table  class="order-details-table">
+    <thead>
+      <tr>
+        <th>Product Id</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of orderDetails">
+        <td>{{ product.orderId }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>{{ product.price  }}</td>
+        <td>{{ product.quantity * product.price }}</td>
+      </tr>
+</tbody>
+</table>
+
+<div *ngFor="let item of orderDetails" class="order-item">
+    <h3>Order ID: {{ item.orderId }}</h3>
+    <p>Ordered On: {{ item.createdAt }}</p>
+    <div class="product-card">
+      <img *ngIf="item.image.length > 0" [src]="item.image[0]" alt="{{ item.name }}" />
+      <p><strong>Product:</strong> {{ item.name }}</p>
+      <p><strong>Price:</strong> ₹{{ item.price }}</p>
+      <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+    </div>
+  </div>
+  

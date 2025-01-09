@@ -1,0 +1,114 @@
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden; /* Prevent content overflow during the animation */
+    height: 400px; /* Set a fixed height to avoid height shrinking */
+    background: #f9f9f9; /* Add background color for the container */
+    border-radius: 10px; /* Add border-radius for a smoother container */
+  }
+  
+  .card {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0; /* Make card invisible at start */
+    visibility: hidden; /* Hide card initially */
+  }
+  
+  .card.details-card {
+    transform: translateX(0); /* Initially in view */
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .card.edit-card {
+    transform: translateX(100%); /* Initially out of view */
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .container.edit-mode .details-card {
+    transform: translateX(-100%); /* Slide out of view */
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .container.edit-mode .edit-card {
+    transform: translateX(0); /* Slide into view */
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Buttons Styling */
+  button {
+    margin: 10px 5px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button.edit-btn {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  button.save-btn {
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+  }
+  
+  button.cancel-btn {
+    background: #dc3545;
+    color: white;
+    font-weight: bold;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      height: auto; /* Allow height to adjust for smaller screens */
+      padding: 20px; /* Add padding for better spacing */
+    }
+  
+    .card {
+      padding: 15px; /* Adjust padding for smaller screens */
+    }
+  
+    button {
+      font-size: 14px;
+      padding: 10px 20px; /* Adjust button padding */
+    }
+  
+    .card h2, .card h3 {
+      font-size: 20px; /* Adjust headings for smaller screens */
+    }
+  
+    .form-group {
+      flex-direction: column; /* Stack input fields on small screens */
+    }
+  
+    .form-group label {
+      margin-bottom: 8px; /* Add space between labels and inputs */
+    }
+  }
+  

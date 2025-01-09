@@ -103,6 +103,69 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).json({ message: 'Server error.', error: err.message });
   }
 };
+
+// Fetch user profile by username (GET)
+exports.getUsersByName = async (req, res) => {
+  try {
+    const username = req.query.username;
+
+    // Validate the username
+    if (!username) {
+      return res.status(400).json({ message: 'Username is required' });
+    }
+
+    // Fetch the user profile from the database
+    const profile = await User.findOne({ username: username });
+
+    if (profile) {
+      res.json(profile);
+    } else {
+      res.status(404).json({ message: 'Profile not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Update user profile (PUT)
+
+exports.updateProfile = async (req, res) => {
+  const { username } = req.body; // Extract username from the payload
+  const updateData = req.body; // Use the rest of the payload as update data
+
+  try {
+    // Validate if username exists in the payload
+    if (!username) {
+      return res.status(400).json({ message: 'Username is required' });
+    }
+
+    // Find the user by username and update the profile
+    const updatedUser = await User.findOneAndUpdate(
+      { username: username }, // Query to find user by username
+      { $set: updateData }, // Update fields
+      { new: true, runValidators: true } // Options: return the updated document and run schema validators
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+      message: 'Profile updated successfully!',
+      updatedUser,
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({
+      message: 'Server error.',
+      error: error.message,
+    });
+  }
+};
+
+
+
 // exports.addItem = async (req, res) => {
 //     const { name, description, image } = req.body;
 

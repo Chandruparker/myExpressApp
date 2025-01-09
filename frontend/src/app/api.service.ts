@@ -102,4 +102,13 @@ export class ApiService {
   getItemByOrderId(orderId: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/api/orders/${orderId}`);
   }
+  updateUserProfile(profile: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/api/profile`, profile);
+  }
+  getUserProfileByUsername(username: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/profile?username=${username}`);
+  }
+
+
+  
 }

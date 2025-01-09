@@ -40,7 +40,13 @@ onLogin() {
         console.error('Login response does not contain role');
       }
       this.message = 'Login successful!';
-      this.router.navigate(['/product']);
+      if(response.user.role === 'admin'){
+        this.router.navigate(['/dashboard']);
+
+      }else{
+        this.router.navigate(['/home']);
+      }
+      
     },
     (error) => {
       this.message = 'Invalid credentials.';

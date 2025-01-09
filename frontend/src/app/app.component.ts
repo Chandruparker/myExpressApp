@@ -43,6 +43,18 @@ export class AppComponent implements OnInit {
       roles: ['admin', 'user'],
       submenus: [
         { label: 'View Orders', route: '/order-details', roles: ['admin'] },
+        { label: 'Your Orders', route: '/your-orders', roles: ['user'] },
+        { label: 'Track Orders', route: '/order', roles: ['user'] },
+        
+      ],
+    },
+    {
+      label: 'Account',
+      isExpanded: false,
+      roles: ['admin', 'user'],
+      submenus: [
+        { label: 'View Profile', route: '/account', roles: ['admin','user'] }
+        
         
       ],
     },
@@ -68,6 +80,7 @@ export class AppComponent implements OnInit {
   isLoggedIn: boolean = false;
   cartItemCount: number = 0;
   isSidebarClosed = false;
+  username: string | null = null;
 
   constructor(private cdr: ChangeDetectorRef,private router: Router, private cartService: CartService,private api:ApiService) {}
 
@@ -82,7 +95,10 @@ export class AppComponent implements OnInit {
     });
 
     // Filter menu based on user role
+    
     const userRole = localStorage.getItem('userRole') || 'user';
+    this.username = localStorage.getItem('userName');
+   
     this.filterMenuByRole(userRole);
     console.log('menuRole',this.filterMenuByRole)
 
@@ -157,10 +173,10 @@ export class AppComponent implements OnInit {
   }
 
   navigateToHome(): void {
-    this.router.navigate(['/product']);
+    this.router.navigate(['/home']);
   }
 
   navigateToOrder(): void {
-    this.router.navigate(['/order']);
+    this.router.navigate(['/your-orders']);
   }
 }

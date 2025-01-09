@@ -37,11 +37,18 @@ export class EditProductComponent {
     }
   
     updateItem(): void {
-      this.api.updateItem(this.item.productId, this.item).subscribe(() => {
+      const productId = this.item.productId;
+      if (isNaN(productId)) {
+        console.error('Invalid productId:', productId);
+        return; // Don't proceed with the update if the productId is invalid
+      }
+    
+      this.api.updateItem(productId, this.item).subscribe(() => {
         alert('Item updated successfully');
-        this.router.navigate(['/product']); // Redirect to list page
+        this.router.navigate(['/product']);
       });
     }
+    
 
     cancel(){
       this.router.navigate(['/product']);
