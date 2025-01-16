@@ -87,6 +87,30 @@
           Get by Tomorrow (+₹50)
         </label>
       </div>
+      <div>
+        <h4>Payment Method:</h4>
+        <label>
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="COD"
+            (change)="paymentOptionChange('COD')"
+            [checked]="paymentOption === 'COD'"
+          />
+          Cash on Delivery
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="Online"
+            (change)="paymentOptionChange('Online')"
+            [checked]="paymentOption === 'Online'"
+          />
+          Online Payment
+        </label>
+      </div>
+      
     </div>
   </div>
   

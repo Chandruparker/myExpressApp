@@ -21,11 +21,20 @@ const orderSchema = new mongoose.Schema({
     ],
     totalValue: Number,
     discount: Number,
-    deliveryCharge: Number,
+    paymentType: String,
+    deliveryOption:String,
     tax: Number,
     gst: Number,
-    finalAmount: Number
+    finalAmount: Number,
+    status: String
+    
   },
+  orderStatus: [
+    {
+      status: { type: String, required: true },
+      updatedAt: { type: Date, default: Date.now }
+    }
+  ],
   createdAt: { type: Date, default: Date.now }
 });
 

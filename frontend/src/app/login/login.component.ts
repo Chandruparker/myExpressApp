@@ -20,6 +20,7 @@ registerData = { username: '', password: '', role: 'user' };
 forgotData = { username: '', newPassword: '' };
 message = '';
 localStorage = ""
+users: any[] = [];
 
 constructor(private api: ApiService,private route: ActivatedRoute,private router: Router) {}
 
@@ -29,30 +30,49 @@ setActiveTab(tab: string) {
 }
 
 onLogin() {
-  this.api.login(this.loginData.username, this.loginData.password).subscribe(
-    (response) => {
-      console.log('resval',response.user.role)
-      if (response && response.user.role) {
-        localStorage.setItem('userRole', response.user.role); // Store the role
-        localStorage.setItem('token', response.user.token); // Store the token
-        localStorage.setItem('userName', response.user.username);
-      } else {
-        console.error('Login response does not contain role');
-      }
-      this.message = 'Login successful!';
-      if(response.user.role === 'admin'){
-        this.router.navigate(['/dashboard']);
+  this.api.getUsers().subscribe(
+    (users) => {
+      this.api.login(this.loginData.username, this.loginData.password).subscribe(
+        (response) => {
+          const loggedInUser = users.find(user => user.username === response.user.username);
 
-      }else{
-        this.router.navigate(['/home']);
-      }
-      
+          if (loggedInUser) {
+            const latestStatus = loggedInUser.userStatus[loggedInUser.userStatus.length - 1];
+
+            // Check if the user is blocked
+            if (latestStatus?.status === 'blocked') {
+              alert('Your account is blocked. Please contact your administrator.');
+              return; // Do not proceed with login or redirect
+            }
+
+            // Proceed with login for non-blocked users
+            localStorage.setItem('userRole', response.user.role);
+            localStorage.setItem('token', response.user.token);
+            localStorage.setItem('userName', response.user.username);
+            sessionStorage.setItem('username', response.user.username);
+
+            this.message = 'Login successful!';
+            if (response.user.role === 'admin') {
+              this.router.navigate(['/dashboard']);
+            } else {
+              this.router.navigate(['/home']);
+            }
+          }
+        },
+        (error) => {
+          this.message = 'Invalid credentials.';
+        }
+      );
     },
     (error) => {
-      this.message = 'Invalid credentials.';
+      console.error('Failed to fetch users:', error);
     }
   );
 }
+
+
+
+
 onLogin2(): void {
   this.api.login(this.loginData.username, this.loginData.password).subscribe(
     (response) => {

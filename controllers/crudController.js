@@ -164,7 +164,75 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
+exports.updateOrderStatus = async (req, res) => {
+  const { orderId } = req.params; // Get orderId from the request URL
+  const { status } = req.body; // Get the new status from the request body
 
+  try {
+    // Validate the inputs
+    if (!orderId || !status) {
+      return res.status(400).json({ message: 'Order ID and status are required.' });
+    }
+
+    // Update the orderStatus array by pushing a new status update
+    const updatedOrder = await Order.findOneAndUpdate(
+      { orderId }, // Find the order by orderId
+      {
+        $push: {
+          orderStatus: {
+            status,
+            updatedAt: new Date() // Add the current timestamp
+          }
+        }
+      },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ message: 'Order not found.' });
+    }
+
+    res.json({ message: 'Order status updated successfully.', order: updatedOrder });
+  } catch (err) {
+    console.error('Error updating order status:', err);
+    res.status(500).json({ message: 'Server error.', error: err.message });
+  }
+};
+
+exports.updateUserStatus = async (req, res) => {
+  const { username } = req.params; // Get orderId from the request URL
+  const { status } = req.body; // Get the new status from the request body
+
+  try {
+    // Validate the inputs
+    if (!username || !status) {
+      return res.status(400).json({ message: 'user and status are required.' });
+    }
+
+    // Update the orderStatus array by pushing a new status update
+    const updatedUser = await User.findOneAndUpdate(
+      { username }, // Find the order by orderId
+      {
+        $push: {
+          userStatus: {
+            status,
+            updatedAt: new Date() // Add the current timestamp
+          }
+        }
+      },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'user not found.' });
+    }
+
+    res.json({ message: 'user status updated successfully.', user: updatedUser });
+  } catch (err) {
+    console.error('Error updating user status:', err);
+    res.status(500).json({ message: 'Server error.', error: err.message });
+  }
+};
 
 // exports.addItem = async (req, res) => {
 //     const { name, description, image } = req.body;

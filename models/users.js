@@ -15,6 +15,12 @@ const userSchema = new mongoose.Schema({
     postalCode: { type: String },
     country: { type: String },
   },
+  userStatus: [
+    {
+      status: { type: String, required: true },
+      updatedAt: { type: Date, default: Date.now }
+    }
+  ],
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -105,6 +105,7 @@ export class ViewProductComponent {
       ...this.item,
       quantity: this.quantity,
       totalPrice: this.item.price * this.quantity,
+      
     };
 
     // Add to cart array

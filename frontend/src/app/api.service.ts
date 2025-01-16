@@ -38,15 +38,20 @@ export class ApiService {
   }
   
   initializeRole(): void {
-    const storedRole = localStorage.getItem('userRole');
+    const storedRole = typeof window !== 'undefined' ? localStorage.getItem('userRole') : null;
+  
     if (storedRole) {
-      this.userRoleSubject.next(storedRole); // Initialize the role if stored in localStorage
+      this.userRoleSubject.next(storedRole); // Emit the role if it exists
+    } else {
+      console.warn('No user role found in localStorage'); // Optional: log if no role is found
     }
   }
+  
 
   logout(): void {
     localStorage.removeItem('userRole');
     localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     this.userRoleSubject.next(null); // Emit null on logout
   }
   
@@ -93,8 +98,12 @@ export class ApiService {
   generateOrderId(): string {
     return 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
   }
-
- 
+  updateOrderStatus(orderId: string, status: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/api/orders/${orderId}/status`, { status });
+  }
+  updateUserStatus(username: string, status: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/api/users/${username}/status`, { status });
+  }
   submitBillingDetails(billingData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/submitOrder`, billingData);
   }
@@ -109,6 +118,12 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/api/profile?username=${username}`);
   }
 
-
+  getUserName(): string | null {
+    if (typeof window !== 'undefined' && sessionStorage) {
+      return sessionStorage.getItem('username');
+    }
+    return null; // Return null if sessionStorage is not available
+  }
+  
   
 }

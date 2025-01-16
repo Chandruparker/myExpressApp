@@ -69,6 +69,12 @@
             <strong>{{ checkoutData.deliveryOption === 'free' ? 'Free Delivery' : 'Get by Tomorrow' }}</strong>
           </p>
         </div>
+        <div class="delivery-option">
+          <h3>Payment Option</h3>
+          <p>
+            <strong>{{ checkoutData.paymentType === 'COD' ? 'Cash On Delivery' : 'Online Payment' }}</strong>
+          </p>
+        </div>
       
         <button class="checkout-btn" (click)="payment()">Confirm and Pay</button>
       </div>

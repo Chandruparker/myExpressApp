@@ -56,7 +56,7 @@ export class BillingDetailsComponent implements OnInit {
           (response) => {
             console.log('Order submitted successfully:', response);
             alert('Order submitted successfully!');
-            this.router.navigate(['/product']);// Redirect to success page
+            this.router.navigate(['/home']);// Redirect to success page
             this.cartService.clearCart(); // Clear the cart
 
           },

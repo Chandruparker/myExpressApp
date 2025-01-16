@@ -6,6 +6,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CartService } from './cart.service';
 import { ApiService } from './api.service';
+import { PermissionComponent } from "./permission/permission.component";
 
 interface Submenu {
   label: string;
@@ -23,7 +24,7 @@ interface MenuItem {
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet,MatToolbarModule,],
+  imports: [CommonModule, RouterOutlet, MatToolbarModule, ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -81,6 +82,11 @@ export class AppComponent implements OnInit {
   cartItemCount: number = 0;
   isSidebarClosed = false;
   username: string | null = null;
+  users: any[] = [];
+  userName: string = ''; 
+    usernamesList: string[] = []; // To store only usernames
+  selectedUsername: string | null = null; // To store a specific username
+  
 
   constructor(private cdr: ChangeDetectorRef,private router: Router, private cartService: CartService,private api:ApiService) {}
 
@@ -88,7 +94,9 @@ export class AppComponent implements OnInit {
     this.cdr.detectChanges();
     // Check login status initially
     this.checkLoginStatus();
-
+    this.username = this.api.getUserName();
+    console.log('username',this.username)
+   
     // Subscribe to cart updates
     this.cartService.cartCount$.subscribe((count) => {
       this.cartItemCount = count;
@@ -96,10 +104,9 @@ export class AppComponent implements OnInit {
 
     // Filter menu based on user role
     
-    const userRole = localStorage.getItem('userRole') || 'user';
-    this.username = localStorage.getItem('userName');
-   
+    const userRole = typeof window !== 'undefined' ? localStorage.getItem('userRole') ?? 'user' : 'user';
     this.filterMenuByRole(userRole);
+    
     console.log('menuRole',this.filterMenuByRole)
 
     // Detect route changes to update login status
@@ -109,19 +116,42 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.api.initializeRole(); // Initialize role from localStorage if available
+    this.api.getUsers().subscribe(
+      (data) => {
+        this.users = data;
+        // Extract a specific username (e.g., user with id 1)
+        const specificUser = this.users.find((user: any) => user.id === 1);
+        if (specificUser) {
+          this.selectedUsername = specificUser.username;
+          console.log('Specific Username:', this.selectedUsername);
+        }
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+      }
+    );
+
+    this.api.initializeRole();
+    console.log('role',this.api.initializeRole) 
+    // Initialize role from localStorage if available
     this.subscribeToRoleChanges();
     
   }
 
   checkLoginStatus(): void {
-    this.isLoggedIn = !!localStorage.getItem('userRole');
+    if (typeof window !== 'undefined' && localStorage) {
+      // Check for the presence of 'userRole' in localStorage
+      this.isLoggedIn = !!localStorage.getItem('userRole');
+    } else {
+      this.isLoggedIn = false; // Default to logged-out state
+    }
   }
+  
 
   subscribeToRoleChanges(): void {
     this.api.getUserRole().subscribe((role) => {
       if (role) {
-        this.isLoggedIn = true;
+        this.isLoggedIn = false;
         this.filterMenuByRole(role);
       } else {
         this.isLoggedIn = false;

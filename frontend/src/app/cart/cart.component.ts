@@ -20,7 +20,8 @@ export class CartComponent {
   couponCode: string = '';
   validCoupon: string = 'SAVE50'; // Example valid coupon
   isCouponApplied: boolean = false;
-  deliveryOption: string = 'free'; // Default delivery option
+  paymentOption: string = 'COD'; // Default payment option
+  deliveryOption: string = 'free';  // Default delivery option
   deliveryCharge: number = 0; // Delivery charges for "Get by Tomorrow"
   constructor(
     private route: ActivatedRoute,
@@ -38,7 +39,7 @@ export class CartComponent {
   }
 
   goBack() {
-    this.router.navigate(['/product']);
+    this.router.navigate(['/home']);
   }
   // checkout() {
   //   this.router.navigate(['/checkout']);
@@ -99,14 +100,21 @@ export class CartComponent {
     this.totalVaL = this.totalValue - this.discountedPrice + this.deliveryCharge;
   }
 
+  paymentOptionChange(option: string): void {
+    this.paymentOption = option;
+    console.log('Selected Payment Option:', this.paymentOption);
+  }
+
   checkout() {
     // Pass data to the checkout page via CartService
     this.cartService.setCheckoutData({
       cartItems: this.cart,
       totalValue: this.totalVaL,
       deliveryOption: this.deliveryOption,
-      discount: this.discountedPrice
+      discount: this.discountedPrice,
+      paymentType: this.paymentOption,
     });
+    console.log('cartService',this.cartService)
 
     // Navigate to the checkout page
     this.router.navigate(['/checkout']);

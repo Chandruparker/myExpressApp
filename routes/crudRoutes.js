@@ -1,6 +1,6 @@
 const express = require('express');
 const upload = require('../controllers/multer-config');
-const { getAllUsers,getAllOrders, getItemByOrderId,orderedItem, getAllItems, addItem, updateItem, deleteItem, getItemById, getUsersByName, updateProfile} = require('../controllers/crudController');
+const { getAllUsers,getAllOrders, getItemByOrderId,orderedItem, getAllItems, addItem, updateItem, deleteItem, getItemById, getUsersByName, updateProfile,updateOrderStatus,updateUserStatus} = require('../controllers/crudController');
 
 const router = express.Router();
 
@@ -17,5 +17,6 @@ router.get('/users', getAllUsers);
 router.get('/orders/:orderId', getItemByOrderId);
 router.get('/profile',getUsersByName);
 router.put('/profile',updateProfile);
-
+router.put('/orders/:orderId/status', updateOrderStatus);
+router.put('/users/:username/status', updateUserStatus);
 module.exports = router;

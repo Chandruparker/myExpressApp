@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user-management',
-  imports: [NgFor],
+  imports: [NgFor,NgIf],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
@@ -32,6 +32,30 @@ export class UserManagementComponent implements OnInit {
 
   viewOrderDetails(order: any): void {
     console.log('Order details:', order);
+  }
+
+  updateUserStatus(event: Event, username: string): void {
+    const selectedStatus = (event.target as HTMLSelectElement).value; // Get the selected status value
+    this.api.updateUserStatus(username, selectedStatus).subscribe({
+      next: (response) => {
+        alert('User status updated successfully!');
+        this.updateUserStatusInList(username, selectedStatus);
+      },
+      error: (err) => {
+        console.error('Error updating user status:', err);
+      },
+    });
+  }
+
+  // Update the status locally to reflect changes without reloading
+  updateUserStatusInList(username: string, status: string): void {
+    const user = this.users.find((o) => o.username === username);
+    if (user) {
+      if (!user.userStatus) {
+        user.userStatus = [];
+      }
+      user.userStatus.push({ status, updatedAt: new Date().toISOString() });
+    }
   }
 }
 

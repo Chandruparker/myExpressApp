@@ -7,8 +7,8 @@
           <th>User Name</th>
           <th>Role</th>
           <th>Status</th>
-          <th>view</th>
-         
+          <th>Current Status</th>
+          <th>Updated On</th>
         </tr>
       </thead>
       <tbody>
@@ -17,15 +17,28 @@
           <td>{{ user.role }}</td>
           
           <td>
-            <select >
+            <select (change)="updateUserStatus($event, user.username)">
               <option value="active">Active</option>
               <option value="In-Active">In-Active</option>
               <option value="blocked">Blocked</option>
              
             </select>
           </td>
-          <td>
-            <button >View</button>
+          <td *ngIf="user.userStatus?.length > 0">
+            {{ user.userStatus[user.userStatus.length - 1].status }}
+          </td>
+    
+          <!-- Fallback for no status -->
+          <td *ngIf="!user.userStatus || user.userStatus.length === 0">
+            --
+          </td>
+          <td *ngIf="user.userStatus?.length > 0">
+            {{ user.userStatus[user.userStatus.length - 1].updatedAt }}
+          </td>
+    
+          <!-- Fallback for no status -->
+          <td *ngIf="!user.userStatus || user.userStatus.length === 0">
+            --
           </td>
         </tr>
       </tbody>
