@@ -36,16 +36,7 @@ export class ApiService {
       })
     );
   }
-  
-  initializeRole(): void {
-    const storedRole = typeof window !== 'undefined' ? localStorage.getItem('userRole') : null;
-  
-    if (storedRole) {
-      this.userRoleSubject.next(storedRole); // Emit the role if it exists
-    } else {
-      console.warn('No user role found in localStorage'); // Optional: log if no role is found
-    }
-  }
+
   
 
   logout(): void {

@@ -84,6 +84,8 @@ export class AppComponent implements OnInit {
   username: string | null = null;
   users: any[] = [];
   userName: string = ''; 
+  loading: boolean = true;
+
     usernamesList: string[] = []; // To store only usernames
   selectedUsername: string | null = null; // To store a specific username
   
@@ -131,8 +133,7 @@ export class AppComponent implements OnInit {
       }
     );
 
-    this.api.initializeRole();
-    console.log('role',this.api.initializeRole) 
+   
     // Initialize role from localStorage if available
     this.subscribeToRoleChanges();
     
