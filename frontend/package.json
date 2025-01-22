@@ -24,6 +24,7 @@
     "@angular/router": "^19.0.1",
     "@angular/ssr": "^19.0.2",
     "@swimlane/ngx-charts": "^21.1.2",
+    "axios": "^1.7.9",
     "chart.js": "^4.4.7",
     "express": "^4.18.2",
     "font-awesome": "^4.7.0",

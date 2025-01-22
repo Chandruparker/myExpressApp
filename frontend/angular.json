@@ -42,8 +42,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                   "maximumWarning": "1mb",
+                    "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -96,7 +96,21 @@
             ],
             "scripts": []
           }
+        },
+        "prerender": {
+        "builder": "@angular-devkit/build-angular:prerender",
+        "options": {
+          "browserTarget": "your-app-name:build:production",
+          "serverTarget": "your-app-name:server:production",
+          "routes": [
+            "/",
+            "/items/edit/101",
+            "/items/edit/102",
+            "/items/edit/103"
+          ]
         }
+      }
+
       }
     }
   }

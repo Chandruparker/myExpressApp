@@ -23,11 +23,27 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'product', component: CrudComponent,canActivate: [RoleGuard],
     data: { role: 'admin' } },
+    {
+      path: 'items',
+      children: [
+        {
+          path: 'view/:productId',
+          component: ViewProductComponent,
+        },
+        {
+          path: 'edit/:productId',
+          component: ViewProductComponent,
+          canActivate: [RoleGuard],
+          data: { role: 'admin' },
+        },
+      ],
+    },
+    
   { path: 'add', component: AddProductComponent,canActivate: [RoleGuard],
     data: { role: 'admin' }, },
-  { path: 'items/edit/:productId', component: EditProductComponent,canActivate: [RoleGuard],
-    data: { role: 'admin' },  },
-  { path: 'items/view/:productId', component: ViewProductComponent },
+  // { path: 'items/edit/:productId', component: EditProductComponent,canActivate: [RoleGuard],
+  //   data: { role: 'admin' },  },
+  // { path: 'items/view/:productId', component: ViewProductComponent },
   { path: 'permission', component: PermissionComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },

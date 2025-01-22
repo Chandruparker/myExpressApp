@@ -66,10 +66,10 @@ export class CrudComponent {
     this.router.navigate(['/add',]);
   }
   viewItem(productId: number) {
-    this.router.navigate(['/items/view', productId]);
+    this.router.navigate(['items', 'view', productId]); // Navigate to child route
   }
   editItem(productId: any) {
-    this.router.navigate(['/items/edit', productId]);
+    this.router.navigate(['items','edit', productId]);
   }
   updateItem() {
     if (this.editingItemId !== null) {
