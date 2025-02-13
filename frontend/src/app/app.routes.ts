@@ -25,18 +25,7 @@ export const routes: Routes = [
     data: { role: 'admin' } },
     {
       path: 'items',
-      children: [
-        {
-          path: 'view/:productId',
-          component: ViewProductComponent,
-        },
-        {
-          path: 'edit/:productId',
-          component: ViewProductComponent,
-          canActivate: [RoleGuard],
-          data: { role: 'admin' },
-        },
-      ],
+      loadChildren:()=>import('./items/items.module').then((m)=>m.ItemsModule)
     },
     
   { path: 'add', component: AddProductComponent,canActivate: [RoleGuard],

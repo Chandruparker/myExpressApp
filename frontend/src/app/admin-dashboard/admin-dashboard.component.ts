@@ -14,12 +14,9 @@ import { Color } from '@swimlane/ngx-charts';
   styleUrl: './admin-dashboard.component.css'
 })
 export class AdminDashboardComponent implements OnInit {
-  // Total Users
   totalUsers: number = 0;
-
-  // Pie Chart Data for User Role Distribution
   userRoleData: any[] = [];
-  userRoleView: [number, number] = [400, 300]; // Width x Height for the chart
+  userRoleView: [number, number] = [400, 300];
   userRoleGradient: boolean = true;
   userRoleColorScheme = {
     domain: ['#FF6384', '#36A2EB', '#FFCE56']
@@ -27,7 +24,7 @@ export class AdminDashboardComponent implements OnInit {
 
   // Bar Chart Data for Order Value Over Time
   orderData: any[] = [];
-  orderView: [number, number] = [700, 400]; // Width x Height for the chart
+  orderView: [number, number] = [700, 400]; 
   orderGradient: boolean = true;
   orderShowXAxis: boolean = true;
   orderShowYAxis: boolean = true;
@@ -44,7 +41,6 @@ export class AdminDashboardComponent implements OnInit {
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
-    // Fetch and prepare User Role data
     this.api.getUsers().subscribe((users: any[]) => {
       const roleCounts = users.reduce((acc, user) => {
         acc[user.role] = (acc[user.role] || 0) + 1;
@@ -58,7 +54,6 @@ export class AdminDashboardComponent implements OnInit {
       }));
     });
 
-    // Fetch and prepare Order Data
     this.api.getOrders().subscribe((orders: any[]) => {
       const groupedData = orders.reduce((acc, order) => {
         const date = new Date(order.createdAt).toLocaleDateString();

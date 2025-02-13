@@ -25,22 +25,17 @@
               <option value="Canceled">Canceled</option>
             </select>
           </td>
-          <!-- <td>
-            <button (click)="viewOrderDetails(order)">View</button>
-          </td> -->
+
           <td *ngIf="order.orderStatus?.length > 0">
             {{ order.orderStatus[order.orderStatus.length - 1].status }}
           </td>
     
-          <!-- Fallback for no status -->
           <td *ngIf="!order.orderStatus || order.orderStatus.length === 0">
             --
           </td>
           <td *ngIf="order.orderStatus?.length > 0">
             {{ order.orderStatus[order.orderStatus.length - 1].updatedAt }}
           </td>
-    
-          <!-- Fallback for no status -->
           <td *ngIf="!order.orderStatus || order.orderStatus.length === 0">
             --
           </td>

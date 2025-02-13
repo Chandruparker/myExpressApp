@@ -14,7 +14,7 @@ export class LoginComponent {
 
 
 
-activeTab: string = 'login'; // Tracks the active tab
+activeTab: string = 'login'; 
 loginData = { username: '', password: '' };
 registerData = { username: '', password: '', role: 'user' };
 forgotData = { username: '', newPassword: '' };
@@ -26,7 +26,7 @@ constructor(private api: ApiService,private route: ActivatedRoute,private router
 
 setActiveTab(tab: string) {
   this.activeTab = tab;
-  this.message = ''; // Clear any previous messages
+  this.message = ''; 
 }
 
 onLogin() {
@@ -38,14 +38,11 @@ onLogin() {
 
           if (loggedInUser) {
             const latestStatus = loggedInUser.userStatus[loggedInUser.userStatus.length - 1];
-
-            // Check if the user is blocked
             if (latestStatus?.status === 'blocked') {
               alert('Your account is blocked. Please contact your administrator.');
-              return; // Do not proceed with login or redirect
+              return;
             }
 
-            // Proceed with login for non-blocked users
             localStorage.setItem('userRole', response.user.role);
             localStorage.setItem('token', response.user.token);
             localStorage.setItem('userName', response.user.username);
@@ -78,7 +75,7 @@ onLogin2(): void {
     (response) => {
       console.log('Login successful:', response);
       this.message = 'Login successful!';
-      this.router.navigate(['/product']); // Navigate to the desired route
+      this.router.navigate(['/product']);
     },
     (error) => {
       console.error('Login failed:', error);
@@ -98,7 +95,7 @@ onRegister() {
     .subscribe(
       (response) => {
         this.message = 'Registration successful! Please login.';
-        this.setActiveTab('login'); // Navigate to login after successful registration
+        this.setActiveTab('login'); 
       },
       (error) => {
         this.message = 'Registration failed. Username might already exist.';
@@ -112,7 +109,7 @@ onForgotPassword() {
     .subscribe(
       (response) => {
         this.message = 'Password reset successful! Please login.';
-        this.setActiveTab('login'); // Navigate to login after password reset
+        this.setActiveTab('login');
       },
       (error) => {
         this.message = 'Error resetting password. User not found.';

@@ -1,54 +1,8 @@
-<!-- <table  class="order-details-table">
-    <thead>
-      <tr>
-        <th>Product Id</th>
-        <th>Product Name</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Total Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of orderDetails">
-        <td>{{ product.orderId }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.quantity }}</td>
-        <td>{{ product.price  }}</td>
-        <td>{{ product.quantity * product.price }}</td>
-      </tr>
-</tbody>
-</table> -->
-
-<!-- <div *ngFor="let item of orderDetails" class="order-item">
-    <h3>Order ID: {{ item.orderId }}</h3>
-    <p>Ordered On: {{ item.createdAt }}</p>
-    <div class="product-card">
-      <img *ngIf="item.image.length > 0" [src]="item.image[0]" alt="{{ item.name }}" />
-      <p><strong>Product:</strong> {{ item.orderDetails.cartItems[0].name }}</p>
-      <p><strong>Price:</strong> ₹{{ item.price }}</p>
-      <p><strong>Quantity:</strong> {{ item.quantity }}</p>
-      <p ><strong>Status:</strong>
-        {{item.orderStatus}}</p>
-      
-    </div>
-  </div> -->
-
   <div *ngIf="orderDetails && orderDetails.length > 0; else noOrders">
     <div *ngFor="let item of orderDetails" class="order-item">
-      <!-- Order Header -->
       <h3>Order ID: {{ item.orderId }}</h3>
       <p>Ordered On: {{ item.createdAt  }}</p>
-  
-      <!-- Shipping Address -->
-      <!-- <div class="address">
-        <h4>Shipping Address:</h4>
-        <p><strong>Address:</strong> {{ item.address?.address }}</p>
-        <p><strong>City:</strong> {{ item.address?.city }}</p>
-        <p><strong>Postal Code:</strong> {{ item.address?.postalCode }}</p>
-        <p><strong>Contact:</strong> {{ item.address?.contact }}</p>
-      </div> -->
-  
-      <!-- Product Details -->
+
       <div class="product-card">
         <img
           *ngIf="item.image && item.image.length > 0"
@@ -60,23 +14,11 @@
         <p><strong>Quantity:</strong> {{ item.quantity }}</p>
       </div>
   
-      <!-- Order Summary -->
-      <!-- <div class="order-summary">
-        <p><strong>Total Value:</strong> ₹{{ item.totalValue }}</p>
-        <p><strong>Discount:</strong> ₹{{ item.discount }}</p>
-        <p><strong>Tax:</strong> ₹{{ item.tax }}</p>
-        <p><strong>GST:</strong> ₹{{ item.gst }}</p>
-      </div> -->
-  
-      <!-- Order Status -->
       <div class="order-status">
         <p><strong>Status:</strong></p>
         <ng-container *ngIf="item.orderStatus && item.orderStatus.length > 0">
           <span>{{ item.orderStatus[item.orderStatus.length - 1]?.status }}</span>
-          <!-- <small>
-            (Updated on: 
-            {{ item.orderStatus[item.orderStatus.length - 1]?.updatedAt}})
-          </small> -->
+   
         </ng-container>
       </div>
     </div>

@@ -14,9 +14,9 @@ import { CartService } from '../cart.service';
 })
 export class ViewProductComponent {
   item: any = {image: []};
-  quantity: number = 1; // Default quantity
-  cart: any[] = []; // Cart array
-  totalValue: number = 0; // Total value of cart
+  quantity: number = 1; 
+  cart: any[] = []; 
+  totalValue: number = 0;
   cartItem: any[] = [];
   cartItemCount: number = 0;
   
@@ -28,7 +28,7 @@ export class ViewProductComponent {
     description:
       'Mill Oil is an innovative oil-filled radiator with the most modern technology.',
   };
-  productImages: string[] = []; // Array to store the image URLs
+  productImages: string[] = [];
   currentImageIndex = 0; 
   selectedImage: string = '';
   specification: boolean=false
@@ -41,60 +41,32 @@ export class ViewProductComponent {
     private cartService: CartService
   ) {}
 
-  // ngOnInit() {
-   
-  //   const productId = Number(this.route.snapshot.paramMap.get('productId'));
-  //   if (!isNaN(productId)) {
-  //     this.api.getItemById(productId).subscribe((data) => {
-  //       this.item = data;
-  //       console.log('val',data)
-  //     });
-     
-  //   } else {
-  //     console.error('Invalid ID');
-  //     this.router.navigate(['/items']); 
-  //   }
-  // }
-  // ngOnInit() {
-  //   const productId = Number(this.route.snapshot.paramMap.get('productId'));
-
-  //   if (!isNaN(productId)) {
-  //     this.api.getItemById(productId).subscribe((data) => {
-  //       if (data.image) {
-  //         data.image = `http://localhost:3000${data.image}`;
-  //       }
-  //       this.item = data;
-  //       console.log('Fetched product:', this.item);
-  //     });
-  //   } else {
-  //     console.error('Invalid ID');
-  //     this.router.navigate(['/items']);
-  //   }
-  // }
-
   ngOnInit() {
-    const productId = Number(this.route.snapshot.paramMap.get('productId'));
+    this.route.queryParams.subscribe(params => {
+      const productId = Number(params['productId']);
   
-    if (!isNaN(productId)) {
-      this.api.getItemById(productId).subscribe((data) => {
-        if (data.image && Array.isArray(data.image)) {
-          // Prepend the base URL to each image path
-          this.item = {
-            ...data,
-            image: data.image.map((imgPath: string) => `http://localhost:3000${imgPath}`)
-          };
-        } else {
-          this.item = data;
-          console.warn('No images found for this product.');
-        }
+      if (!isNaN(productId)) {
+        this.api.getItemById(productId).subscribe((data) => {
+          if (data.image && Array.isArray(data.image)) {
+           
+            this.item = {
+              ...data,
+              image: data.image.map((imgPath: string) => `http://localhost:3000${imgPath}`)
+            };
+          } else {
+            this.item = data;
+            // console.warn('No images found for this product.');
+          }
   
-        console.log('Fetched product:', this.item);
-      });
-    } else {
-      console.error('Invalid ID');
-      this.router.navigate(['/items']);
-    }
+          // console.log('Fetched product:', this.item);
+        });
+      } else {
+        console.error('Invalid ID');
+        this.router.navigate(['/items']); 
+      }
+    });
   }
+  
   
   goBack() {
     this.router.navigate(['/product']);
@@ -107,16 +79,12 @@ export class ViewProductComponent {
       totalPrice: this.item.price * this.quantity,
       
     };
-
-    // Add to cart array
     this.cartService.addToCart(cartItem);
-    
-
-    console.log('Cart:', cartItem);
+  
   }
 
   navigateToCart() {
-    // Navigate to the cart page and pass the cart data
+   
     this.router.navigate(['/cart'], { state: { cart: this.cart } });
   }
   prevImage() {

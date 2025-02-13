@@ -1,12 +1,4 @@
-
-<!-- <form (submit)="updateItem()">
-    <input type="text" [(ngModel)]="itemName" name="name" placeholder="Name" required />
-  
-    <input type="text" [(ngModel)]="itemDescription" name="description" placeholder="Description" required />
-    <button type="submit">Update</button>
-  </form> -->
-
-  <div class="grid-container">
+ <div class="grid-container">
     <div class="grid-item">
       <div *ngIf="item">
         <h2>Edit Item</h2>
@@ -19,13 +11,13 @@
             Description:
             <textarea [(ngModel)]="item.description" name="description"></textarea>
           </label>
-        
+          <button type="submit">Update</button>
+          <button (click)="cancel()">Cancel</button>
         </form>
       </div>
     </div>
     <div class="grid-item">
-      <button type="submit">Update</button>
-      <button (click)="cancel()">Cancel</button>
+     
     </div>
     </div>
 

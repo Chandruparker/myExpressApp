@@ -11,16 +11,16 @@ import { NgIf } from '@angular/common';
 })
 export class AccountInfoComponent implements OnInit {
   profileForm!: FormGroup;
-  isEditMode: boolean = false; // For toggling between cards
-  username!: string; // To store the username fetched from localStorage
-  profile: any = {}; // To store the profile details for the view card
+  isEditMode: boolean = false; 
+  username!: string; 
+  profile: any = {}; 
 
   constructor(private fb: FormBuilder, private api: ApiService) {}
 
   ngOnInit(): void {
     this.initForm();
 
-    // Retrieve username from localStorage
+   
     this.username = localStorage.getItem('userName') || '';
     if (this.username) {
       this.fetchUserProfile(this.username);
@@ -29,7 +29,7 @@ export class AccountInfoComponent implements OnInit {
     }
   }
 
-  // Initialize the profile form
+ 
   private initForm(): void {
     this.profileForm = this.fb.group({
       fullName: [''],
@@ -47,12 +47,12 @@ export class AccountInfoComponent implements OnInit {
     });
   }
 
-  // Fetch user profile data
+ 
   private fetchUserProfile(username: string): void {
     this.api.getUserProfileByUsername(username).subscribe({
       next: (profile) => {
-        this.profile = profile; // Store the profile data for the view card
-        this.profileForm.patchValue(profile); // Populate the form with profile data
+        this.profile = profile; 
+        this.profileForm.patchValue(profile); 
       },
       error: (err) => {
         console.error('Error fetching profile:', err);
@@ -60,25 +60,25 @@ export class AccountInfoComponent implements OnInit {
     });
   }
 
-  // Toggle edit mode (between view card and edit card)
+  
   toggleEditMode(): void {
     this.isEditMode = !this.isEditMode;
 
-    // If cancel is clicked, reset the form to the original profile data
+    
     if (!this.isEditMode) {
       this.profileForm.patchValue(this.profile);
     }
   }
 
-  // Save profile changes
+ 
   saveChanges(): void {
     if (this.profileForm.valid) {
       const updatedProfile = this.profileForm.value;
 
       this.api.updateUserProfile(updatedProfile).subscribe({
         next: (updatedData) => {
-          this.profile = updatedData; // Update the view card with the updated profile
-          this.isEditMode = false; // Exit edit mode
+          this.profile = updatedData; 
+          this.isEditMode = false; 
           alert('Profile updated successfully!');
         },
         error: (err) => {

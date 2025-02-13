@@ -40,10 +40,8 @@
   
   <div class="grid-item">
     <div class="cart">
-      <!-- Display Original Total Value -->
+    
       <h3>Original Total: {{ totalValue }}</h3>
-  
-      <!-- Input Field for Coupon Code -->
       <div>
         <input
           type="text"
@@ -53,18 +51,15 @@
         <button (click)="applyCoupon()">Apply Coupon</button>
       </div>
   
-      <!-- Show Discounted Total if Coupon is Valid -->
       <div *ngIf="isCouponApplied">
         <h3>Discounted Total: {{ totalVaL }}</h3>
         <p>Congratulations! You saved {{ discountedPrice }}!</p>
       </div>
   
-      <!-- Show Message for Invalid Coupon -->
       <div *ngIf="!isCouponApplied && couponCode && couponCode.length === 7">
         <p style="color: red;">Invalid Coupon Code!</p>
       </div>
-  
-      <!-- Shipping Options -->
+
       <div>
         <h4>Choose Delivery Option:</h4>
         <label>
@@ -114,39 +109,6 @@
     </div>
   </div>
   
-  <!-- <div class="grid-item" >
-    
-   
-    <ul>
-      <label class="check-label">
-        <input type="radio" name="gender" value="Male"
-        ngModel #genderRef="ngModel"><i class="blue"></i> Male
-        </label>
-  
-   
-  </ul>
-</div> -->
-<!-- <div class="grid-item" >
-  <div class="shipping_box">
-    <ul class="list">
-       
-    </ul>
-    <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6>
-    <select class="shipping_select">
-        <option value="1">Bangladesh</option>
-        <option value="2">India</option>
-        <option value="4">Pakistan</option>
-    </select>
-    <select class="shipping_select">
-        <option value="1">Select a State</option>
-        <option value="2">Select a State</option>
-        <option value="4">Select a State</option>
-    </select>
-    <input type="text" placeholder="Postcode/Zipcode">
-    
-    <button href="#">Update Details</button>
-</div>
-</div> -->
 <div class="grid-item" >
   <div class="checkout_btn_inner d-flex align-items-center">
     <button (click)="goBack()">Continue Shopping</button>

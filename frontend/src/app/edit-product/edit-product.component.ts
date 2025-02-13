@@ -24,23 +24,34 @@ export class EditProductComponent {
 
     item: any = {}; 
   
-    ngOnInit(): void {
-      const productId = Number(this.route.snapshot.paramMap.get('productId'));
+ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const productId = Number(params['productId']); 
       if (!isNaN(productId)) {
-        this.api.getItemById(productId).subscribe((data) => {
-          this.item = data; // Assign the data to 'item'
+        this.api.getItemById(productId).subscribe({
+          next: (data) => {
+            this.item = data;
+            console.log('Item:', data);
+          },
+          error: (err) => {
+            console.error('Error fetching item:', err);
+            this.router.navigate(['/items']); 
+          }
         });
       } else {
         console.error('Invalid ID');
-        this.router.navigate(['/items']); // Redirect to list page
+        this.router.navigate(['/items']); 
       }
-    }
+    });
+  }
   
     updateItem(): void {
+      debugger
       const productId = this.item.productId;
+      console.log('Updating item:', this.item.productId);
       if (isNaN(productId)) {
         console.error('Invalid productId:', productId);
-        return; // Don't proceed with the update if the productId is invalid
+        return; 
       }
     
       this.api.updateItem(productId, this.item).subscribe(() => {

@@ -7,23 +7,23 @@ import { BehaviorSubject } from 'rxjs';
 export class CartService {
   private cart: any[] = [];
   private checkoutData: any = {};
-  private cartCount = new BehaviorSubject<number>(0); // BehaviorSubject for item count
+  private cartCount = new BehaviorSubject<number>(0);
 
-  cartCount$ = this.cartCount.asObservable(); // Observable for cart count
+  cartCount$ = this.cartCount.asObservable(); 
 
   addToCart(item: any) {
     const existingItem = this.cart.find(cartItem => cartItem.productId === item.productId); 
      
     if (existingItem) {
     
-      existingItem.quantity += item.quantity; // Update quantity if the item exists
-      existingItem.totalPrice += item.totalPrice; // Update total price
+      existingItem.quantity += item.quantity; 
+      existingItem.totalPrice += item.totalPrice; 
     } else {
-      this.cart.push(item); // Add a new item to the cart
+      this.cart.push(item); 
       console.log('cartServiceValue',this.cart)
     }
 
-    this.updateCartCount(); // Update distinct item count
+    this.updateCartCount(); 
   }
 
   getCart() {
@@ -31,8 +31,8 @@ export class CartService {
   }
 
   private updateCartCount() {
-    const distinctItemCount = this.cart.length; // Count unique items
-    this.cartCount.next(distinctItemCount); // Update BehaviorSubject with unique item count
+    const distinctItemCount = this.cart.length; 
+    this.cartCount.next(distinctItemCount); 
   }
   setCheckoutData(data: any) {
     this.checkoutData = data;
@@ -43,6 +43,6 @@ export class CartService {
   }
   clearCart() {
     this.cart = [];
-    this.updateCartCount(); // Update distinct item count
+    this.updateCartCount(); 
   }
 }

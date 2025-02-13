@@ -53,73 +53,9 @@ export class AddProductComponent {
     });
   }
 
-  // addItem() {
-  //   const newItem = { name: this.itemName, description: this.itemDescription, image:this.selectedImage };
-  //   this.api.addItem(newItem).subscribe(() => {
-  //     this.fetchItems();
-  //     this.itemName = '';
-  //     this.itemDescription = '';
-  //     console.log('data', this.itemName,this.itemDescription)
-  //   });
-  //   this.router.navigate(['/product']);
-  // }
-
-  // onFileChange(event: Event): void {
-  //   const fileInput = event.target as HTMLInputElement;
-  //   if (fileInput.files && fileInput.files.length > 0) {
-  //     this.selectedImage = fileInput.files[0];
-
-  //     // Preview the image
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       this.preview = reader.result;
-  //     };
-  //     reader.readAsDataURL(this.selectedImage);
-
-  //     this.itemForm.patchValue({ image: this.selectedImage });
-  //   }
-  // }
-
-  // addItem(): void {
-  //   const formData = new FormData();
-  //   formData.append('name', this.itemName);
-  //   formData.append('description', this.itemDescription);
-  //   formData.append('category', this.itemCategory);
-  //   formData.append('price', this.itemPrice?.toString() || '');
-  //    if (!this.itemName || !this.itemDescription || !this.itemCategory || !this.itemPrice || !this.selectedImage) {
-  //     alert('All fields are required.');
-  //     return;
-  //   }
-  //   console.log('FormData contents:'); 
-  //   formData.forEach((value, key) => console.log(key, value));
-    
-  //   if (this.selectedImage) {
-  //     formData.append('image', this.selectedImage);
-  //   }
-
-  //   this.api.addItem(formData).subscribe((res) => {
-  //     this.router.navigate(['/product']);
-  //     console.log('formval',res)
-  //   });
-  // }
-
-  // onFileChange(event: Event): void {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files && input.files.length > 0) {
-  //     this.selectedImage = input.files[0];
-  //     console.log('Selected File:', this.selectedImage); 
-  //   }
-  // }
-
-  // onSubmit(): void {
-  //   if (this.itemForm.valid) {
-  //     console.log('Form Data:', this.itemForm.value);
-  //   }
-  // }
   addItem(): void {
     const formData = new FormData();
-  
-    // Append form fields
+
     formData.append('name', this.itemName);
     formData.append('description', this.itemDescription);
     formData.append('category', this.itemCategory);
@@ -129,16 +65,14 @@ export class AddProductComponent {
       alert('All fields and at least one image are required.');
       return;
     }
-  
-    // Append all selected images to FormData
+
     this.selectedImages.forEach((file) => {
-      formData.append('images', file); // Use 'images' as the key for multiple images
+      formData.append('images', file); 
     });
   
     console.log('FormData contents:');
     formData.forEach((value, key) => console.log(key, value));
-  
-    // Call the service
+
     this.api.addItem(formData).subscribe(
       (res) => {
         this.router.navigate(['/product']);
@@ -155,17 +89,17 @@ export class AddProductComponent {
     const input = event.target as HTMLInputElement;
   
     if (input.files && input.files.length > 0) {
-      this.selectedImages = Array.from(input.files); // Convert FileList to File[]
-      this.imagePreviews = []; // Clear previous previews
+      this.selectedImages = Array.from(input.files); 
+      this.imagePreviews = []; 
   
       this.selectedImages.forEach((file) => {
         const reader = new FileReader();
   
         reader.onload = (e: any) => {
-          this.imagePreviews.push(e.target.result); // Add image preview URL
+          this.imagePreviews.push(e.target.result); 
         };
   
-        reader.readAsDataURL(file); // Read file as data URL
+        reader.readAsDataURL(file); 
       });
   
       console.log('Selected Files:', this.selectedImages);
@@ -179,10 +113,5 @@ onSubmit(): void {
   if (this.itemForm.valid) {
     console.log('Form Data:', this.itemForm.value);
   }
-}
-
-// Define selectedImages to hold multiple files
-// selectedImages: File[] = [];
-
-  
+}  
 }

@@ -1,5 +1,4 @@
 <div class="container" [class.edit-mode]="isEditMode">
-    <!-- Profile Details Card -->
     <div class="card details-card">
       <h2>Profile Details</h2>
       <div>
@@ -13,11 +12,9 @@
       <button class="edit-btn" (click)="toggleEditMode()">Edit Profile</button>
     </div>
   
-    <!-- Edit Profile Card -->
     <div class="card edit-card">
         <h2>Edit Profile</h2>
         <form [formGroup]="profileForm">
-          <!-- Personal Information -->
           <h3>Personal Information</h3>
           <div class="form-group">
             <label>
@@ -44,7 +41,6 @@
             <input type="date" formControlName="dob" />
           </label>
       
-          <!-- Address Information -->
           <h3>Address Information</h3>
           <div class="form-group">
             <label>
@@ -71,7 +67,6 @@
             <input type="text" formControlName="country" />
           </label>
       
-          <!-- Buttons -->
           <div class="button-group">
             <button type="button" class="save-btn" (click)="saveChanges()">Save Changes</button>
             <button type="button" class="cancel-btn" (click)="toggleEditMode()">Cancel</button>

@@ -1,159 +1,7 @@
-
-<!-- <h1>Angular Router App</h1>
-<nav>
-  <ul>
-    <li><a routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">First Component</a></li>
-    <li><a routerLink="/dashboard" routerLinkActive="active" ariaCurrentWhenActive="page">Second Component</a></li>
-  </ul>
-</nav> -->
-
-<!-- <nav>
-  <a *ngIf="isAdmin()" routerLink="/add">Add Product</a>
-</nav> -->
-
-  <!-- <div class="toolbar" style="background-color: #00bcd4;">
-    <div class="toolbar-left">
-    
-      <h1>E-Commerce</h1>
-    </div>
-    <div class="toolbar-right">
-      
-      <button (click)="navigateToLogin()">Login</button>
-      <button (click)="navigateToHome()">Home</button>
-      <button (click)="navigateToOrder()">your Order</button>
-      <button (click)="navigateToCart()">🛒 Cart ({{ cartItemCount }})</button>
-    </div>
-  </div>
-  
-
-<router-outlet></router-outlet> -->
-
-<!-- <footer class="footer-area section_gap">
-  <div class="container">
-    <div class="row" style="display: flex;">
-      <div class="col-lg-3  col-md-6 col-sm-6">
-        <div class="single-footer-widget">
-          <h6>About Us</h6>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore
-            magna aliqua.
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-4  col-md-6 col-sm-6">
-        <div class="single-footer-widget">
-          <h6>Newsletter</h6>
-          <p>Stay update with our latest</p>
-          <div class="" id="mc_embed_signup">
-
-            <form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-             method="get" class="form-inline">
-
-              <div class="d-flex flex-row">
-
-                <input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-                 required="" type="email">
-
-
-                <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
-                <div style="position: absolute; left: -5000px;">
-                  <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-                </div>
-
-               
-              </div>
-              <div class="info"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3  col-md-6 col-sm-6">
-        <div class="single-footer-widget mail-chimp">
-          <h6 class="mb-20">Instragram Feed</h6>
-          <ul class="instafeed d-flex flex-wrap">
-            <li><img src="img/i1.jpg" alt=""></li>
-            <li><img src="img/i2.jpg" alt=""></li>
-            <li><img src="img/i3.jpg" alt=""></li>
-            <li><img src="img/i4.jpg" alt=""></li>
-            <li><img src="img/i5.jpg" alt=""></li>
-            <li><img src="img/i6.jpg" alt=""></li>
-            <li><img src="img/i7.jpg" alt=""></li>
-            <li><img src="img/i8.jpg" alt=""></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-6 col-sm-6">
-        <div class="single-footer-widget">
-          <h6>Follow Us</h6>
-          <p>Let us be social</p>
-          <div class="footer-social d-flex align-items-center">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-dribbble"></i></a>
-            <a href="#"><i class="fa fa-behance"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-  </div>
-</footer> -->
-
-<!-- 
-<footer class="footer">
-  <div style=" display: flex;">
-  <div class="footer-section footer-about">
-    <h3>About Us</h3>
-    <p>
-      We are dedicated to providing the best products and services to our customers. 
-      Our mission is to deliver quality and excellence in every aspect.
-    </p>
-  </div>
-
-  <div class="footer-section footer-links" style="margin-left: 6rem;">
-    <h3>Quick Links</h3>
-    <ul>
-      <li><a href="/home">Home</a></li>
-      <li><a href="/shop">Shop</a></li>
-      <li><a href="/about">About Us</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-  </div>
-  <div class="footer-section footer-social">
-    <h3>Follow Us</h3>
-    <div class="social-icons">
-      <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-       
-      </a>
-      <a href="https://twitter.com" target="_blank" aria-label="Twitter">
-       
-      </a>
-      <a href="https://instagram.com" target="_blank" aria-label="Instagram">
-      
-      </a>
-      <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
-       
-      </a>
-    </div>
-  </div>
-  <div class="footer-section footer-contact">
-    <h3>Contact Us</h3>
-    <p>Email: jj</p>
-    <p>Phone: +123 456 7890</p>
-    <p>Address: 123 Main Street, City, Country</p>
-  </div>
-</div>
-  <div class="footer-bottom">
-    <p>&copy; 2024 YourCompany. All Rights Reserved.</p>
-  </div>
-
-</footer> -->
-
-
 <div *ngIf="isLoggedIn;  else loginPage" >
-  <!-- Main Layout (Top Bar, Sidebar, and Content) -->
+  
   <div class="main-container">
-    <!-- Top Bar -->
+   
     <div class="toolbar">
       <div class="toolbar-left">
         <h1>E-Commerce</h1>
@@ -168,9 +16,9 @@
       </div>
     </div>
 
-    <!-- Sidebar and Content -->
+  
     <div class="content-container">
-      <!-- Sidebar -->
+    
       <div class="sidebar" [class.closed]="isSidebarClosed">
         <button class="toggle-btn" (click)="toggleSidebar()">
           {{ isSidebarClosed ? 'Open' : 'Close' }}
@@ -182,7 +30,7 @@
                 {{ menu.label }}
               </span>
               <ng-template #iconOnly>
-                <i class="menu-icon">🔹</i> <!-- Replace with actual icons -->
+                <i class="menu-icon">🔹</i> 
               </ng-template>
               <span *ngIf="menu.submenus">
                 {{ menu.isExpanded ? '▼' : '▶' }}
@@ -197,7 +45,6 @@
         </ul>
       </div>
 
-      <!-- Main Content -->
       <div class="main-content">
         <router-outlet></router-outlet>
       </div>
@@ -205,7 +52,6 @@
   </div>
 </div>
 
-<!-- Login Page -->
 <ng-template #loginPage>
   <div class="login-container">
     <h2>Welcome! Please Log In</h2>

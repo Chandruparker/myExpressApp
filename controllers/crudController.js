@@ -408,21 +408,21 @@ exports.updateItem = async (req, res) => {
 //   };
   
 exports.getItemById = async (req, res) => {
-    const { productId } = req.params;
-  
-    try {
-      // Use findOne to query by productId instead of _id
-      const item = await Item.findOne({ productId: parseInt(productId) });
-  
-      if (!item) {
-        return res.status(404).json({ message: 'Item not found.' });
-      }
-  
-      res.json(item);
-    } catch (err) {
-      res.status(500).json({ message: 'Server error.', error: err.message });
+  const { productId } = req.query; // Correct way to get query params
+
+  try {
+    const item = await Item.findOne({ productId: parseInt(productId) });
+
+    if (!item) {
+      return res.status(404).json({ message: 'Item not found.' });
     }
-  };
+
+    res.json(item);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error.', error: err.message });
+  }
+};
+
   
   exports.orderedItem = async (req, res) => {
     try {

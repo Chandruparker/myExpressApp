@@ -1,127 +1,13 @@
-
-<!-- <h2>Item Details</h2>
-<div>
-  <p><strong>ID:</strong> {{ item.productId }}</p>
-  <p><strong>Name:</strong> {{ item.name }}</p>
- 
- 
-
-</div>
-<div  class="image-container">
-  <img [src]="item.image" alt="Image">
-  <span class="url-text">{{ item.description }}</span>
-</div>
-
-<button (click)="goBack()">Back to List</button> -->
-
-<!-- <h2>Item Details</h2>
-<div>
-  <p><strong>ID:</strong> {{ item.productId }}</p>
-  <p><strong>Name:</strong> {{ item.name }}</p>
-</div>
-<div class="image-container">
-  <img [src]="item.image" alt="Image">
-  <span class="url-text">{{ item.description }}</span>
-</div>
-
-
-<div>
-  <label for="quantity"><strong>Quantity:</strong></label>
-  <input type="number" id="quantity" [(ngModel)]="quantity" min="1" />
-</div>
-
-
-<div>
-  <p><strong>Total Price:</strong> {{ item.price * quantity}}</p>
-</div>
-
-
-<button (click)="addToCart()">Add to Cart</button>
-<button (click)="goBack()">Back to List</button> -->
-
-
-<!-- <h2>Item Details</h2>
-<div>
-  <p><strong>ID:</strong> {{ item.productId }}</p>
-  <p><strong>Name:</strong> {{ item.name }}</p>
-</div>
-<div class="image-container">
-  <img [src]="item.image" alt="Image">
-  <span class="url-text">{{ item.description }}</span>
-</div>
-
-
-<div>
-  <label for="quantity"><strong>Quantity:</strong></label>
-  <input type="number" id="quantity" [(ngModel)]="quantity" min="1" />
-</div>
-
-
-<div>
-  <p><strong>Total Price:</strong> {{ item.price * quantity}}</p>
-</div>
-
-
-<div>
-  <button (click)="addToCart()">Add to Cart</button>
-  <button (click)="goBack()">Back to List</button>
-</div>
-
-
-<div>
-  <button (click)="navigateToCart()">🛒 Cart ({{ cartItemCount }})</button>
-</div> -->
-
-
-<!-- <div class="grid-container">
-  <div class="grid-item">
-    <div>
-      <p><strong>ID:</strong> {{ item.productId }}</p>
-      <p><strong>Name:</strong> {{ item.name }}</p>
-    </div>
-    <div class="image-container">
-      <img [src]="item.image" alt="Image">
-      <span class="url-text">{{ item.description }}</span>
-    </div>
-    
-   
-    <div>
-      <label for="quantity"><strong>Quantity:</strong></label>
-      <input type="number" id="quantity" [(ngModel)]="quantity" min="1" />
-    </div>
-    
-   
-    <div>
-      <p><strong>Total Price:</strong> {{ item.price * quantity}}</p>
-    </div>
-  </div>
-  <div class="grid-item">
-    <div>
-      <button (click)="addToCart()">Add to Cart</button>
-      <button (click)="goBack()">Back to List</button>
-    </div>
-  
-  </div>
-  
-</div> -->
-
 <div class="product_image_area">
   <div class="container">
     <div class="row s_product_inner">
-      <!-- Product Images -->
       <div class="slider">
-        <!-- Previous Arrow -->
         <button class="arrow prev" (click)="prevImage()" [disabled]="currentImageIndex === 0">
           &#8249;
         </button>
-      
-        <!-- Image Display -->
         <div class="image-container">
           <img [src]="item.image?.[currentImageIndex]" alt="Product Image" class="slider-image" />
-
         </div>
-      
-        <!-- Next Arrow -->
         <button
           class="arrow next"
           (click)="nextImage()"
@@ -130,8 +16,6 @@
           &#8250;
         </button>
       </div>
-
-      <!-- Product Details -->
       <div class="col-lg-5 offset-lg-1">
         <div class="s_product_text">
           <h3>{{ item.name }}</h3>
@@ -145,8 +29,6 @@
             </li>
           </ul>
           <p>{{ item.description }}</p>
-
-          <!-- Quantity Control -->
           <div class="product_count">
             <label for="qty">Quantity:</label>
             <input
@@ -188,7 +70,6 @@
   </div>
 </div>
 
-<!-- Specification Container -->
 <div class="grid-container" *ngIf="selectedTab === 'description'">
   <div class="grid-item">
     <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of all shapes and sizes enjoying themselves .Born between the two world wars, Beryl Cook eventually left Kendrick School in Reading at the age of 15, where she went to secretarial school and then into an insurance office. After moving to London and then Hampton, she eventually married her next door neighbour from Reading, John Cook. He was an officer in the Merchant Navy and after he left the sea in 1956, they bought a pub for a year before John took a job in Southern Rhodesia with a motor company. Beryl bought their young son a box of watercolours, and when showing him how to use it, she decided that she herself quite enjoyed painting. John subsequently bought her a child’s painting set for her birthday and it was with this that she produced her first significant work, a half-length portrait of a dark-skinned lady with a vacant expression and large drooping breasts. It was aptly named ‘Hangover’ by Beryl’s husband and
@@ -197,7 +78,6 @@
   </div>
 </div>
 
-<!-- Review Container -->
 <div class="grid-container" *ngIf="selectedTab === 'specification'">
   <div class="grid-item">
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -274,8 +154,6 @@
     </div>
   </div>
 </div>
-
-<!-- Rating Container -->
 <div class="grid-container" *ngIf="selectedTab === 'comments'">
   <div class="grid-item">
     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">

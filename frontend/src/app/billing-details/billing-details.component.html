@@ -3,7 +3,6 @@
         <div class="billing-container">
             <h1>Billing Details</h1>
             <form (ngSubmit)="submitBillingDetails()" #billingForm="ngForm">
-              <!-- User Name -->
               <div class="form-group">
                 <label for="name">Name</label>
                 <input
@@ -16,7 +15,6 @@
                 />
               </div>
           
-              <!-- Address -->
               <div class="form-group">
                 <label for="address">Address</label>
                 <textarea
@@ -28,7 +26,6 @@
                 ></textarea>
               </div>
           
-              <!-- City -->
               <div class="form-group">
                 <label for="city">City</label>
                 <input
@@ -41,7 +38,6 @@
                 />
               </div>
           
-              <!-- Postal Code -->
               <div class="form-group">
                 <label for="postalCode">Postal Code</label>
                 <input
@@ -54,7 +50,7 @@
                 />
               </div>
           
-              <!-- Contact Number -->
+             
               <div class="form-group">
                 <label for="contact">Contact Number</label>
                 <input
@@ -67,7 +63,7 @@
                 />
               </div>
           
-              <!-- Submit Button -->
+             
               <button type="submit" class="btn btn-primary" [disabled]="!billingForm.form.valid">
                 Submit
               </button>

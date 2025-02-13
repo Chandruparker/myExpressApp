@@ -2,10 +2,7 @@
     <h1>Our Products</h1>
     <div class="products-grid">
       <div class="product-card" *ngFor="let product of orderDetails">
-        <!-- Product Image -->
         <img [src]="product.image[0]" alt="Product Image" class="product-image" />
-  
-        <!-- Product Details -->
         <div class="product-details">
           <h3 class="product-name">{{ product.name }}</h3>
           <p class="product-description">{{ product.description }}</p>
@@ -15,20 +12,11 @@
           </p>
           <div class="product-rating">
             Rating: 
-            <span *ngFor="let star of getStars(product.rating)">
+            <!-- <span *ngFor="let star of getStars(product.rating)">
                 ★
-              </span>
+              </span> -->
           </div>
         </div>
-  
-        <!-- Add to Cart Button -->
-        <!-- <button
-          class="add-to-cart-btn"
-          [disabled]="!product.inStock"
-          (click)="addToCart(product)"
-        >
-          Add to Cart
-        </button> -->
         <button
           class="add-to-cart-btn"
          

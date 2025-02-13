@@ -86,32 +86,21 @@ export class AppComponent implements OnInit {
   userName: string = ''; 
   loading: boolean = true;
 
-    usernamesList: string[] = []; // To store only usernames
-  selectedUsername: string | null = null; // To store a specific username
+    usernamesList: string[] = []; 
+  selectedUsername: string | null = null; 
   
 
   constructor(private cdr: ChangeDetectorRef,private router: Router, private cartService: CartService,private api:ApiService) {}
 
   ngOnInit(): void {
     this.cdr.detectChanges();
-    // Check login status initially
     this.checkLoginStatus();
     this.username = this.api.getUserName();
-    console.log('username',this.username)
-   
-    // Subscribe to cart updates
     this.cartService.cartCount$.subscribe((count) => {
       this.cartItemCount = count;
-    });
-
-    // Filter menu based on user role
-    
+    });    
     const userRole = typeof window !== 'undefined' ? localStorage.getItem('userRole') ?? 'user' : 'user';
     this.filterMenuByRole(userRole);
-    
-    console.log('menuRole',this.filterMenuByRole)
-
-    // Detect route changes to update login status
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.checkLoginStatus();
@@ -121,30 +110,24 @@ export class AppComponent implements OnInit {
     this.api.getUsers().subscribe(
       (data) => {
         this.users = data;
-        // Extract a specific username (e.g., user with id 1)
         const specificUser = this.users.find((user: any) => user.id === 1);
         if (specificUser) {
           this.selectedUsername = specificUser.username;
-          console.log('Specific Username:', this.selectedUsername);
         }
       },
       (error) => {
         console.error('Error fetching users:', error);
       }
     );
-
-   
-    // Initialize role from localStorage if available
     this.subscribeToRoleChanges();
     
   }
 
   checkLoginStatus(): void {
     if (typeof window !== 'undefined' && localStorage) {
-      // Check for the presence of 'userRole' in localStorage
       this.isLoggedIn = !!localStorage.getItem('userRole');
     } else {
-      this.isLoggedIn = false; // Default to logged-out state
+      this.isLoggedIn = false;
     }
   }
   
@@ -158,7 +141,7 @@ export class AppComponent implements OnInit {
         this.isLoggedIn = false;
         this.filteredMenuItems = [];
       }
-      this.cdr.detectChanges(); // Ensure view updates dynamically
+      this.cdr.detectChanges();
     });
   }
 
@@ -174,7 +157,6 @@ export class AppComponent implements OnInit {
         }
         return menu;
       });
-    console.log('Filtered Menu Items:', this.filteredMenuItems); // Debugging
   }
 
 

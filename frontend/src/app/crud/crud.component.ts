@@ -35,17 +35,15 @@ export class CrudComponent {
     if (typeof window !== 'undefined' && localStorage) {
       this.userRole = localStorage.getItem('userRole') || '';
     } else {
-      console.warn('localStorage is not available.');
+      // console.warn('localStorage is not available.');
       this.userRole = '';
     }
     this.api.getItems().subscribe((data) => {
       this.items = data.map((item) => ({
         ...item,
-        category: item.category ? item.category.trim().toLowerCase() : '', // Normalize category
+        category: item.category ? item.category.trim().toLowerCase() : '',
       }));
       this.dataSource.data = this.items;
-      
-      // Prepare dropdown options
       const uniqueCategories = new Set(this.items.map((item) => item.category));
       this.categories = ['all', ...Array.from(uniqueCategories)];
     });
@@ -66,10 +64,10 @@ export class CrudComponent {
     this.router.navigate(['/add',]);
   }
   viewItem(productId: number) {
-    this.router.navigate(['items', 'view', productId]); // Navigate to child route
+    this.router.navigate(['items', 'view'], { queryParams: { productId } });
   }
   editItem(productId: any) {
-    this.router.navigate(['items','edit', productId]);
+    this.router.navigate(['items', 'edit'], { queryParams: { productId } });
   }
   updateItem() {
     if (this.editingItemId !== null) {
@@ -93,21 +91,20 @@ export class CrudComponent {
   }
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.dataSource.filter = filterValue; // Apply filter
+    this.dataSource.filter = filterValue;
   }
   
   onCategoryChange(event: Event): void {
     const selectedCategory = (event.target as HTMLSelectElement).value.trim().toLowerCase();
   
     if (selectedCategory === 'all') {
-      this.dataSource.data = [...this.items]; // Reset to all items
+      this.dataSource.data = [...this.items];
     } else {
       this.dataSource.data = this.items.filter(
         (item) => item.category === selectedCategory
-      ); // Filter by category
+      ); 
     }
   
-    // Reset paginator to first page after filtering
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

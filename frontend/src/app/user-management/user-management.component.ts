@@ -23,7 +23,7 @@ export class UserManagementComponent implements OnInit {
         this.users = data;
       },
       (error) => {
-        console.error('Error fetching orders:', error);
+        // console.error('Error fetching orders:', error);
       }
     );
   }
@@ -31,23 +31,22 @@ export class UserManagementComponent implements OnInit {
 
 
   viewOrderDetails(order: any): void {
-    console.log('Order details:', order);
+    // console.log('Order details:', order);
   }
 
   updateUserStatus(event: Event, username: string): void {
-    const selectedStatus = (event.target as HTMLSelectElement).value; // Get the selected status value
+    const selectedStatus = (event.target as HTMLSelectElement).value; 
     this.api.updateUserStatus(username, selectedStatus).subscribe({
       next: (response) => {
         alert('User status updated successfully!');
         this.updateUserStatusInList(username, selectedStatus);
       },
       error: (err) => {
-        console.error('Error updating user status:', err);
+        // console.error('Error updating user status:', err);
       },
     });
   }
 
-  // Update the status locally to reflect changes without reloading
   updateUserStatusInList(username: string, status: string): void {
     const user = this.users.find((o) => o.username === username);
     if (user) {

@@ -1,14 +1,10 @@
 <div class="order-details-container">
     <h2>Fetch Order Details</h2>
-    
-    <!-- Input Field to Pass Order ID -->
     <div class="form-group">
       <label for="orderIdInput">Order ID:</label>
       <input type="text" id="orderIdInput" [(ngModel)]="orderId" placeholder="Enter Order ID" />
       <button (click)="fetchOrderDetails()">Fetch Order</button>
     </div>
-  
-    <!-- Display Order Details in a Table -->
     <table *ngIf="orderDetails" class="order-details-table">
       <thead>
         <tr>

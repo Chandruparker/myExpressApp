@@ -10,8 +10,8 @@ import { NgFor, NgIf } from '@angular/common';
   styleUrl: './checkout.component.css'
 })
 export class CheckoutComponent {
-  cart: any[] = []; // Cart items
-  totalValue: number = 0; // Total value of cart
+  cart: any[] = []; 
+  totalValue: number = 0;
   checkoutData: any = {};
  constructor(
     private route: ActivatedRoute,
@@ -22,8 +22,6 @@ export class CheckoutComponent {
 
   ngOnInit() {
     this.checkoutData = this.cartService.getCheckoutData();
-
-    // Calculate Tax (8%) and GST (12%)
     this.checkoutData.tax = this.checkoutData.totalValue * 0.08;
     this.checkoutData.gst = this.checkoutData.totalValue * 0.12;
   }

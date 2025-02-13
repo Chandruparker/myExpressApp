@@ -12,17 +12,17 @@ import { FormsModule } from '@angular/forms';
 })
 export class CartComponent {
 
-  cart: any[] = []; // Cart items
-  totalValue: number = 0; // Total value of cart
+  cart: any[] = []; 
+  totalValue: number = 0;
   quantity: number = 1;
   discountedPrice: number = 0;
   totalVaL: number = 0;
   couponCode: string = '';
-  validCoupon: string = 'SAVE50'; // Example valid coupon
+  validCoupon: string = 'SAVE50'; 
   isCouponApplied: boolean = false;
-  paymentOption: string = 'COD'; // Default payment option
-  deliveryOption: string = 'free';  // Default delivery option
-  deliveryCharge: number = 0; // Delivery charges for "Get by Tomorrow"
+  paymentOption: string = 'COD'; 
+  deliveryOption: string = 'free'; 
+  deliveryCharge: number = 0; 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -34,52 +34,33 @@ export class CartComponent {
     this.cart = this.cartService.getCart();
     // this.totalValue = this.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     this.updateTotal();
-    console.log('cart',this.cart)
-    console.log('cart',this.totalValue)
+
   }
 
   goBack() {
     this.router.navigate(['/home']);
   }
-  // checkout() {
-  //   this.router.navigate(['/checkout']);
-  // }
+
   clearCart(id: number) {
     this.cart = [];
   }
 
-
-  // applyCoupon() {
-  //   if (this.couponCode === this.validCoupon) {
-  //     console.log('Original Total:', this.totalValue);
-  //     this.discountedPrice = this.totalValue * 0.5; // Calculate 50% discount
-  //     this.totalVaL = this.totalValue - this.discountedPrice; // Apply discount to get the new total
-  //     this.isCouponApplied = true;
-  //     console.log('Discounted Total:', this.totalVaL);
-  //   } else {
-  //     alert('Invalid Coupon Code');
-  //     this.isCouponApplied = false;
-  //   }
-  // }
-  
   updateTotal() {
     this.totalValue = this.cart.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     );
 
-    // Recalculate discounted total if coupon is applied
     if (this.isCouponApplied) {
-      this.totalVaL = this.totalValue * 0.5; // 50% discount
+      this.totalVaL = this.totalValue * 0.5;
       this.discountedPrice = this.totalValue - this.totalVaL;
     }
   }
 
-  // Function to apply coupon code
   applyCoupon() {
     if (this.couponCode === this.validCoupon) {
-      this.discountedPrice = this.totalValue * 0.5; // Calculate 50% discount
-      this.totalVaL = this.totalValue - this.discountedPrice; // Calculate discounted total
+      this.discountedPrice = this.totalValue * 0.5; 
+      this.totalVaL = this.totalValue - this.discountedPrice; 
       this.isCouponApplied = true;
       console.log('Discounted Total:', this.totalVaL);
     } else {
@@ -91,22 +72,20 @@ export class CartComponent {
     this.deliveryOption = option;
 
     if (this.deliveryOption === 'fast') {
-      this.deliveryCharge = 50; // Add delivery charge for "Get by Tomorrow"
+      this.deliveryCharge = 50; 
     } else {
-      this.deliveryCharge = 0; // Free delivery has no extra charge
+      this.deliveryCharge = 0;
     }
-
-    // Recalculate final total based on delivery charge
     this.totalVaL = this.totalValue - this.discountedPrice + this.deliveryCharge;
   }
 
   paymentOptionChange(option: string): void {
     this.paymentOption = option;
-    console.log('Selected Payment Option:', this.paymentOption);
+   
   }
 
   checkout() {
-    // Pass data to the checkout page via CartService
+   
     this.cartService.setCheckoutData({
       cartItems: this.cart,
       totalValue: this.totalVaL,
@@ -114,9 +93,7 @@ export class CartComponent {
       discount: this.discountedPrice,
       paymentType: this.paymentOption,
     });
-    console.log('cartService',this.cartService)
 
-    // Navigate to the checkout page
     this.router.navigate(['/checkout']);
   }
 

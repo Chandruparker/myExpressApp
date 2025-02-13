@@ -21,7 +21,7 @@ export class OrderManagementComponent implements OnInit {
     this.api.getOrders().subscribe(
       (data) => {
         this.orders = data;
-        console.log('Orders:', this.orders);
+        // console.log('Orders:', this.orders);
       },
       (error) => {
         console.error('Error fetching orders:', error);
@@ -32,7 +32,7 @@ export class OrderManagementComponent implements OnInit {
 
 
   viewOrderDetails(order: any): void {
-    console.log('Order details:', order);
+    // console.log('Order details:', order);
   }
 
  
@@ -44,7 +44,7 @@ export class OrderManagementComponent implements OnInit {
         this.updateOrderStatusInList(orderId, selectedStatus);
       },
       error: (err) => {
-        console.error('Error updating order status:', err);
+        // console.error('Error updating order status:', err);
       },
     });
   }

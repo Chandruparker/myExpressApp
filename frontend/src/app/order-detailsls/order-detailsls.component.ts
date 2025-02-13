@@ -22,7 +22,6 @@ export class OrderDetailslsComponent {
       next: (data) => {
         this.orderDetails = data;
         this.hasSearched = true;
-        console.log('Order details:', this.orderDetails);
       },
       error: (err) => {
         console.error('Error fetching order details:', err);

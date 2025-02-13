@@ -27,16 +27,12 @@
           <td *ngIf="user.userStatus?.length > 0">
             {{ user.userStatus[user.userStatus.length - 1].status }}
           </td>
-    
-          <!-- Fallback for no status -->
           <td *ngIf="!user.userStatus || user.userStatus.length === 0">
             --
           </td>
           <td *ngIf="user.userStatus?.length > 0">
             {{ user.userStatus[user.userStatus.length - 1].updatedAt }}
           </td>
-    
-          <!-- Fallback for no status -->
           <td *ngIf="!user.userStatus || user.userStatus.length === 0">
             --
           </td>
